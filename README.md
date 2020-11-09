@@ -1,1 +1,1 @@
-Geometry Visualization
+Geometry Visualizer
