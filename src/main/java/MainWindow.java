@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +16,8 @@ public class MainWindow extends JFrame implements ActionListener {
     private final DrawArea drawArea;
 
     public MainWindow() {
-        super("Geometry Visualizer");
+        super("Untitled*");
+        // TODO: work-around
 
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
@@ -25,7 +27,9 @@ public class MainWindow extends JFrame implements ActionListener {
         container.add(drawArea, BorderLayout.CENTER);
 
         // Create control bar
-        JPanel control_bar = new JPanel();
+        JPanel control_bar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        control_bar.setBackground(Color.decode("#3598DC"));
+        control_bar.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         clearBtn = new JButton("Clear");
         clearBtn.addActionListener(this);
@@ -55,10 +59,32 @@ public class MainWindow extends JFrame implements ActionListener {
         // Add control bar to the main window
         container.add(control_bar, BorderLayout.NORTH);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+        // Create status bar
+        JPanel status_bar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        status_bar.setBackground(Color.decode("#3598DC"));
+        status_bar.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        JLabel x_coord = new JLabel("X: 100");
+        x_coord.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        x_coord.setForeground(Color.white);
+
+        JLabel y_coord = new JLabel("Y: 100");
+        y_coord.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        y_coord.setForeground(Color.white);
+
+        status_bar.add(x_coord);
+        status_bar.add(new JLabel("\t"));
+        status_bar.add(y_coord);
+
+        // Add status bar to the main window
+        container.add(status_bar, BorderLayout.SOUTH);
+
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        setMaximizedBounds(env.getMaximumWindowBounds());
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override

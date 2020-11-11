@@ -1,11 +1,20 @@
 public class Application {
 
     public Application() {
-        new MainWindow();
+
+    }
+
+    public void start() {
+        MainWindow main_window = new MainWindow();
+    }
+
+    public void exit() {
+
     }
 
     public static void main(String[] args) {
-        new Application();
+        Application app = new Application();
+        app.start();
     }
 
 }
