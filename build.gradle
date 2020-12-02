@@ -22,3 +22,8 @@ task test_MongoDB(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'MongoDb'
 }
+
+task Login(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'MainLogin'
+}
