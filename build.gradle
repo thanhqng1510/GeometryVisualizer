@@ -1,4 +1,4 @@
-apply plugin: 'application'
+apply plugin: ''
 
 repositories {
     mavenCentral()
@@ -11,3 +11,4 @@ task Application(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = "Application"
 }
+java

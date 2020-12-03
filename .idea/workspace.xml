@@ -29,18 +29,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0a240e6-5f18-4902-9d08-32f677081cd0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogInOutSignUp/Login.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogInOutSignUp/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogInOutSignUp/NewWindow.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogInOutSignUp/ResetPassword.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogInOutSignUp/SignUp.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MongoDb.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,6 +166,7 @@
       <option name="presentableId" value="Default" />
       <updated>1604932301458</updated>
       <workItem from="1606957679941" duration="1875000" />
+      <workItem from="1606979059202" duration="382000" />
     </task>
     <servers />
   </component>
