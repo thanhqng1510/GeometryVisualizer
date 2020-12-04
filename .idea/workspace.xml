@@ -28,16 +28,13 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0a240e6-5f18-4902-9d08-32f677081cd0" name="Default Changelist" comment="Add button icons&#10;Add draw mode&#10;Add more draw shape">
-      <change afterPath="$PROJECT_DIR$/res/oval.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/toggleGridBtn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Oval.java" afterDir="false" />
+    <list default="true" id="e0a240e6-5f18-4902-9d08-32f677081cd0" name="Default Changelist" comment="Add oval draw shape">
       <change beforePath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DrawArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DrawArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Oval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Oval.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ShapeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShapeType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -198,7 +195,7 @@
       <workItem from="1606979059202" duration="2730000" />
       <workItem from="1606989035662" duration="2963000" />
       <workItem from="1606992273287" duration="13131000" />
-      <workItem from="1607012879171" duration="41204000" />
+      <workItem from="1607012879171" duration="45172000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor Graphics2D to context">
       <created>1606980389875</created>
@@ -214,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607113390554</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add oval draw shape">
+      <created>1607115941266</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607115941266</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -233,6 +237,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Refactor Graphics2D to context" />
     <MESSAGE value="Add button icons&#10;Add draw mode&#10;Add more draw shape" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add button icons&#10;Add draw mode&#10;Add more draw shape" />
+    <MESSAGE value="Add oval draw shape" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add oval draw shape" />
   </component>
 </project>

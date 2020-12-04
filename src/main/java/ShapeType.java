@@ -33,7 +33,7 @@ public enum ShapeType {
         else if (value == RECT.value)
             return new Rect(null, null, paintColor);
         else if (value == OVAL.value)
-            return new Oval(null, 0, 0, paintColor);
+            return new Oval(new Point(), 1, 1, paintColor);
         return null;
     }
 

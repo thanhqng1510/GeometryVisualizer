@@ -7,6 +7,8 @@ public class Oval extends Shape {
     public Oval(Point topLeft, int width, int height, Paint paint) {
         super(paint);
         this.topLeft = topLeft;
+        this.anchorX = topLeft.x;
+        this.anchorY = topLeft.y;
         this.width = width;
         this.height = height;
     }
@@ -17,6 +19,8 @@ public class Oval extends Shape {
 
     public void setTopLeft(Point topLeft) {
         this.topLeft = topLeft;
+        this.anchorX = topLeft.x;
+        this.anchorY = topLeft.y;
     }
 
     public int getWidth() {
@@ -48,14 +52,22 @@ public class Oval extends Shape {
     @Override
     public void startDraw(MouseEvent e) {
         topLeft = new Point(e.getX(), e.getY());
-        width = 0;
-        height = 0;
+        anchorX = topLeft.x;
+        anchorY = topLeft.y;
+        width = 1;
+        height = 1;
     }
 
     @Override
     public void onDraw(MouseEvent e) {
-        width = Math.abs(e.getX() - topLeft.x);
-        height = Math.abs(e.getY() - topLeft.y);
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+
+        topLeft.x = Math.min(mouseX, anchorX);
+        topLeft.y = Math.min(mouseY, anchorY);
+
+        width = Math.abs(mouseX - anchorX) + 1;
+        height = Math.abs(mouseY - anchorY) + 1;
     }
 
     @Override
@@ -64,6 +76,8 @@ public class Oval extends Shape {
     }
 
     private Point topLeft;
+    private int anchorX;
+    private int anchorY;
     private int width;
     private int height;
 
