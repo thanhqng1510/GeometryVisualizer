@@ -10,6 +10,7 @@ public class DrawArea extends JPanel {
         g2d = null;
         drawShapeType = ShapeType.LINE;
         cursorMode = CursorMode.SELECT;
+        shouldDrawGrid = true;
         paintColor = Color.BLACK;
         data = new ArrayList<>();
         userCurShape = null;
@@ -108,9 +109,14 @@ public class DrawArea extends JPanel {
         repaint();
     }
 
+    public void toggleGridView() {
+        shouldDrawGrid = !shouldDrawGrid;
+    }
+
     private Graphics2D g2d;
     private ShapeType drawShapeType;
     private CursorMode cursorMode;
+    private boolean shouldDrawGrid;
     private Paint paintColor;
     private final ArrayList<Shape> data;
 
@@ -127,32 +133,32 @@ public class DrawArea extends JPanel {
 
         clear();
 
-        drawGrid(g);
-        doPainting(g);
+        if (shouldDrawGrid)
+            drawGrid();
+
+        doPainting();
     }
 
-    private void drawGrid(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-
+    private void drawGrid() {
         int w = getWidth();
         int h = getHeight();
         int rows = h / 25;
         int cols = w / 25;
 
-        g2d.setPaint(Color.decode("#b6b6b6"));
+        g2d.setPaint(Color.decode("#b1b1b1"));
 
         int rowHeight = h / rows;
-        for (int i = 0; i < rows; ++i)
-            g.drawLine(0, i * rowHeight, w, i * rowHeight);
+        for (int i = 0; i < rows + 1; ++i)
+            g2d.drawLine(0, i * rowHeight, w, i * rowHeight);
 
         int colWidth = w / cols;
-        for (int i = 0; i < cols; ++i)
-            g.drawLine(i * colWidth, 0, i * colWidth, h);
+        for (int i = 0; i < cols + 1; ++i)
+            g2d.drawLine(i * colWidth, 0, i * colWidth, h);
 
         g2d.setPaint(paintColor);
     }
 
-    private void doPainting(Graphics g) {
+    private void doPainting() {
         if (isDrawing) {
             userCurShape.drawOn(g2d);
         }

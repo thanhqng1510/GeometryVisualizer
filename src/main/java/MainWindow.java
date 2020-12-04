@@ -26,14 +26,22 @@ public class MainWindow extends JFrame {
                     drawArea.setCursorMode(CursorMode.SELECT);
                     drawArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
-                else if (e.getSource() == clearBtn)
-                    drawArea.clearScreen();
+                else if (e.getSource() == shapeTypeComboBox) {
+                    ShapeType shapeType = (ShapeType) ((JComboBox) e.getSource()).getSelectedItem();
+                    drawArea.setDrawShapeType(shapeType);
+                    drawArea.setCursorMode(CursorMode.DRAW);
+                    drawArea.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                }
+                else if (e.getSource() == toggleGridBtn)
+                    drawArea.toggleGridView();
                 else if (e.getSource() == changeColorBtn) {
                     JDialog dialog = JColorChooser.createDialog(
                             drawArea, "Choose color", false, colorChooser,
                             e1 -> drawArea.setPaint(colorChooser.getColor()), null);
                     dialog.setVisible(true);
                 }
+                else if (e.getSource() == clearBtn)
+                    drawArea.clearScreen();
             }
 
         };
@@ -108,13 +116,13 @@ public class MainWindow extends JFrame {
                 }
 
         });
-        shapeTypeComboBox.addActionListener(e -> {
-            ShapeType shapeType = (ShapeType) ((JComboBox) e.getSource()).getSelectedItem();
-            drawArea.setDrawShapeType(shapeType);
-            drawArea.setCursorMode(CursorMode.DRAW);
-            drawArea.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        });
+        shapeTypeComboBox.addActionListener(toolbarAdapter);
         shapeTypeComboBox.setMaximumSize(shapeTypeComboBox.getPreferredSize());
+
+        toggleGridBtn = new JButton(new ImageIcon("./res/toggleGridBtn.png"));
+        toggleGridBtn.setBackground(toolbarColor);
+        toggleGridBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        toggleGridBtn.addActionListener(toolbarAdapter);
 
         changeColorBtn = new JButton("Color", new ImageIcon("./res/changeColorBtn.png"));
         changeColorBtn.setBackground(toolbarColor);
@@ -128,6 +136,7 @@ public class MainWindow extends JFrame {
 
         toolbar.add(selectCursorBtn);
         toolbar.add(shapeTypeComboBox);
+        toolbar.add(toggleGridBtn);
         toolbar.add(changeColorBtn);
         toolbar.add(clearBtn);
 
@@ -171,6 +180,7 @@ public class MainWindow extends JFrame {
     private final JToolBar toolbar;
     private final JButton selectCursorBtn;
     private final JComboBox<ShapeType> shapeTypeComboBox;
+    private final JButton toggleGridBtn;
     private final JButton changeColorBtn;
     private final JColorChooser colorChooser;
     private final JButton clearBtn;

@@ -5,12 +5,14 @@ public enum ShapeType {
 
     LINE(0, "./res/line.png"),
     RECT(1, "./res/rect.png"),
-    NUM_TYPE(2, "");
+    OVAL(2, "./res/oval.png"),
+    NUM_TYPE(3, "");
 
     public static ShapeType[] getAllTypes() {
         ShapeType[] types = new ShapeType[NUM_TYPE.value];
         types[LINE.value] = LINE;
         types[RECT.value] = RECT;
+        types[OVAL.value] = OVAL;
         return types;
     }
 
@@ -27,9 +29,11 @@ public enum ShapeType {
 
     public Shape getInstance(Paint paintColor) {
         if (value == LINE.value)
-            return new Line(new Point(), new Point(), paintColor);
+            return new Line(null, null, paintColor);
         else if (value == RECT.value)
-            return new Rect(new Point(), new Point(), paintColor);
+            return new Rect(null, null, paintColor);
+        else if (value == OVAL.value)
+            return new Oval(null, 0, 0, paintColor);
         return null;
     }
 
@@ -39,6 +43,8 @@ public enum ShapeType {
             return "Line";
         else if (value == RECT.value)
             return "Rectangle";
+        else if (value == OVAL.value)
+            return "Oval";
         return "";
     }
 
