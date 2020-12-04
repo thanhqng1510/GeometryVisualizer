@@ -10,7 +10,7 @@ public class DrawArea extends JComponent {
     // Image to draw
     private Image image;
     // Graphics 2D object => use to draw on
-    private Graphics2D g2d;
+    private Graphics2D context;
     // Mouse coordinates
     private int curX, curY, oldX, oldY;
 
@@ -33,8 +33,8 @@ public class DrawArea extends JComponent {
                 curX = e.getX();
                 curY = e.getY();
 
-                if (g2d != null) {
-                    g2d.drawLine(oldX, oldY, curX, curY);
+                if (context != null) {
+                    context.drawLine(oldX, oldY, curX, curY);
                     repaint();
                     oldX = curX;
                     oldY = curY;
@@ -45,22 +45,22 @@ public class DrawArea extends JComponent {
     }
 
     public void clear() {
-        g2d.setPaint(Color.white);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        context.setPaint(Color.white);
+        context.fillRect(0, 0, getWidth(), getHeight());
         repaint();
-        g2d.setPaint(Color.black);
+        context.setPaint(Color.black);
     }
 
     public void setColor(Color color) {
-        g2d.setPaint(color);
+        context.setPaint(color);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         if (image == null) {
             image = createImage(getWidth(), getHeight());
-            g2d = (Graphics2D)image.getGraphics();
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            context = (Graphics2D)image.getGraphics();
+            context.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             clear();
         }
         g.drawImage(image, 0, 0, null);

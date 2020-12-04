@@ -178,7 +178,8 @@ public class Login extends JFrame implements ActionListener, MouseListener {
             int flag = db.login(email.getText(),String.valueOf(password.getPassword()));
             if (flag == 0){
                 setVisible(false);
-                NewWindow nw= new NewWindow();
+                Application app = new Application();
+                app.start();
             }else if (flag == 1){
                 war.setText("Account has not been found");
                 this.revalidate();
