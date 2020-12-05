@@ -13,6 +13,7 @@ public class DrawArea extends JPanel {
         shouldDrawGrid = true;
         paintColor = Color.BLACK;
         data = new ArrayList<>();
+        scaleFactor = .02f;
         userCurShape = null;
         isDrawing = false;
 
@@ -24,21 +25,34 @@ public class DrawArea extends JPanel {
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
 
+                Point mouseLocation = new Point(e.getX(), e.getY());
+
                 switch (cursorMode) {
+                    case SELECT:
+                        // TODO: add more features
+                        break;
+                    case ZOOM_IN:
+                        if (userCurShape != null)
+                            userCurShape.scale(mouseLocation, 1 + scaleFactor);
+                        for (Shape s : data)
+                            s.scale(mouseLocation, 1 + scaleFactor);
+                        break;
+                    case ZOOM_OUT:
+                        if (userCurShape != null)
+                            userCurShape.scale(mouseLocation, 1 - scaleFactor);
+                        for (Shape s : data)
+                            s.scale(mouseLocation, 1 - scaleFactor);
+                        break;
                     case DRAW:
                         if (!isDrawing) {
                             userCurShape = drawShapeType.getInstance(paintColor);
                             assert userCurShape != null;
-                            userCurShape.startDraw(e);
+                            userCurShape.startDraw(mouseLocation);
                         }
-                        else {
+                        else
                             data.add(userCurShape.endDraw());
-                        }
 
                         isDrawing = !isDrawing;
-                        break;
-                    case SELECT:
-                        // TODO: add more features
                         break;
                 }
             }
@@ -50,13 +64,15 @@ public class DrawArea extends JPanel {
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
 
+                Point mouseLocation = new Point(e.getX(), e.getY());
+
                 switch (cursorMode) {
-                    case DRAW:
-                        if (isDrawing)
-                            userCurShape.onDraw(e);
-                        break;
                     case SELECT:
                         // TODO: add more features
+                        break;
+                    case DRAW:
+                        if (isDrawing)
+                            userCurShape.onDraw(mouseLocation);
                         break;
                 }
             }
@@ -65,18 +81,35 @@ public class DrawArea extends JPanel {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
+                Point mouseLocation = new Point(e.getX(), e.getY());
+
                 switch (cursorMode) {
-                    case DRAW:
-                        if (isDrawing) {
-                            userCurShape.onDraw(e);
-                        }
-                        break;
                     case SELECT:
                         // TODO: add more features
                         break;
+                    case MOVE_AROUND:
+                        if (userCurShape != null)
+                            userCurShape.translate(1, 1);
+                        for (Shape s : data)
+                            s.translate(1, 1);
+                        break;
+                    case ZOOM_IN:
+                        if (userCurShape != null)
+                            userCurShape.scale(mouseLocation, 1 + scaleFactor);
+                        for (Shape s : data)
+                            s.scale(mouseLocation, 1 + scaleFactor);
+                        break;
+                    case ZOOM_OUT:
+                        if (userCurShape != null)
+                            userCurShape.scale(mouseLocation, 1 - scaleFactor);
+                        for (Shape s : data)
+                            s.scale(mouseLocation, 1 - scaleFactor);
+                        break;
+                    case DRAW:
+                        if (isDrawing)
+                            userCurShape.onDraw(mouseLocation);
+                        break;
                 }
-
-
             }
 
         });
@@ -119,6 +152,7 @@ public class DrawArea extends JPanel {
     private boolean shouldDrawGrid;
     private Paint paintColor;
     private final ArrayList<Shape> data;
+    private final float scaleFactor;
 
     private Shape userCurShape;
     private boolean isDrawing;
@@ -142,10 +176,10 @@ public class DrawArea extends JPanel {
     private void drawGrid() {
         int w = getWidth();
         int h = getHeight();
-        int rows = h / 25;
-        int cols = w / 25;
+        int rows = h / 30;
+        int cols = w / 30;
 
-        g2d.setPaint(Color.decode("#b1b1b1"));
+        g2d.setPaint(Color.decode("#bababa"));
 
         int rowHeight = h / rows;
         for (int i = 0; i < rows + 1; ++i)
@@ -159,13 +193,11 @@ public class DrawArea extends JPanel {
     }
 
     private void doPainting() {
-        if (isDrawing) {
+        if (isDrawing)
             userCurShape.drawOn(g2d);
-        }
 
-        for (Shape s : data) {
+        for (Shape s : data)
             s.drawOn(g2d);
-        }
     }
 
     private void clear() {

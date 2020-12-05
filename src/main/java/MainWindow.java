@@ -26,6 +26,18 @@ public class MainWindow extends JFrame {
                     drawArea.setCursorMode(CursorMode.SELECT);
                     drawArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
+                else if (e.getSource() == moveAroundBtn) {
+                    drawArea.setCursorMode(CursorMode.MOVE_AROUND);
+                    drawArea.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+                }
+                else if (e.getSource() == zoomInBtn) {
+                    drawArea.setCursorMode(CursorMode.ZOOM_IN);
+                    drawArea.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                }
+                else if (e.getSource() == zoomOutBtn) {
+                    drawArea.setCursorMode(CursorMode.ZOOM_OUT);
+                    drawArea.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                }
                 else if (e.getSource() == shapeTypeComboBox) {
                     ShapeType shapeType = (ShapeType) ((JComboBox) e.getSource()).getSelectedItem();
                     drawArea.setDrawShapeType(shapeType);
@@ -101,6 +113,21 @@ public class MainWindow extends JFrame {
         selectCursorBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
         selectCursorBtn.addActionListener(toolbarAdapter);
 
+        moveAroundBtn = new JButton(new ImageIcon("./res/moveAroundBtn.png"));
+        moveAroundBtn.setBackground(toolbarColor);
+        moveAroundBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        moveAroundBtn.addActionListener(toolbarAdapter);
+
+        zoomInBtn = new JButton(new ImageIcon("./res/zoomInBtn.png"));
+        zoomInBtn.setBackground(toolbarColor);
+        zoomInBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        zoomInBtn.addActionListener(toolbarAdapter);
+
+        zoomOutBtn = new JButton(new ImageIcon("./res/zoomOutBtn.png"));
+        zoomOutBtn.setBackground(toolbarColor);
+        zoomOutBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        zoomOutBtn.addActionListener(toolbarAdapter);
+
         shapeTypeComboBox = new JComboBox<>(ShapeType.getAllTypes());
         shapeTypeComboBox.setRenderer(new DefaultListCellRenderer() {
 
@@ -135,6 +162,9 @@ public class MainWindow extends JFrame {
         clearBtn.addActionListener(toolbarAdapter);
 
         toolbar.add(selectCursorBtn);
+        toolbar.add(moveAroundBtn);
+        toolbar.add(zoomInBtn);
+        toolbar.add(zoomOutBtn);
         toolbar.add(shapeTypeComboBox);
         toolbar.add(toggleGridBtn);
         toolbar.add(changeColorBtn);
@@ -179,6 +209,9 @@ public class MainWindow extends JFrame {
 
     private final JToolBar toolbar;
     private final JButton selectCursorBtn;
+    private final JButton moveAroundBtn;
+    private final JButton zoomInBtn;
+    private final JButton zoomOutBtn;
     private final JComboBox<ShapeType> shapeTypeComboBox;
     private final JButton toggleGridBtn;
     private final JButton changeColorBtn;

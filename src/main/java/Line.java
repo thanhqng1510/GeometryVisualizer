@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 
 public class Line extends Shape {
@@ -37,19 +36,34 @@ public class Line extends Shape {
     }
 
     @Override
-    public void startDraw(MouseEvent e) {
-        start = new Point(e.getX(), e.getY());
-        end = (Point) start.clone();
+    public void startDraw(Point location) {
+        start = location;
+        end = location;
     }
 
     @Override
-    public void onDraw(MouseEvent e) {
-        end = new Point(e.getX(), e.getY());
+    public void onDraw(Point location) {
+        end = location;
     }
 
     @Override
     public Shape endDraw() {
         return this;
+    }
+
+    @Override
+    public void translate(int dx, int dy) {
+        start.translate(dx, dy);
+        end.translate(dx, dy);
+    }
+
+    @Override
+    public void scale(Point origin, float scaleFactor) {
+        start.x = (int) ((start.x - origin.x) * scaleFactor + origin.x);
+        start.y = (int) ((start.y - origin.y) * scaleFactor + origin.y);
+
+        end.x = (int) ((end.x - origin.x) * scaleFactor + origin.x);
+        end.y = (int) ((end.y - origin.y) * scaleFactor + origin.y);
     }
 
     private Point start;

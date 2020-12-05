@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 
 public class Oval extends Shape {
@@ -50,8 +49,8 @@ public class Oval extends Shape {
     }
 
     @Override
-    public void startDraw(MouseEvent e) {
-        topLeft = new Point(e.getX(), e.getY());
+    public void startDraw(Point location) {
+        topLeft = location;
         anchorX = topLeft.x;
         anchorY = topLeft.y;
         width = 1;
@@ -59,9 +58,9 @@ public class Oval extends Shape {
     }
 
     @Override
-    public void onDraw(MouseEvent e) {
-        int mouseX = e.getX();
-        int mouseY = e.getY();
+    public void onDraw(Point location) {
+        int mouseX = location.x;
+        int mouseY = location.y;
 
         topLeft.x = Math.min(mouseX, anchorX);
         topLeft.y = Math.min(mouseY, anchorY);
@@ -73,6 +72,18 @@ public class Oval extends Shape {
     @Override
     public Shape endDraw() {
         return this;
+    }
+
+    @Override
+    public void translate(int dx, int dy) {
+        topLeft.translate(dx, dy);
+        anchorX = topLeft.x;
+        anchorY = topLeft.y;
+    }
+
+    @Override
+    public void scale(Point origin, float scaleFactor) {
+
     }
 
     private Point topLeft;

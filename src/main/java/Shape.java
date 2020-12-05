@@ -18,11 +18,15 @@ public abstract class Shape {
 
     public abstract void drawOn(Graphics2D g2d);
 
-    public abstract void startDraw(MouseEvent e);
+    public abstract void startDraw(Point location);
 
-    public abstract void onDraw(MouseEvent e);
+    public abstract void onDraw(Point location);
 
     public abstract Shape endDraw();
+
+    public abstract void translate(int dx, int dy);
+
+    public abstract void scale(Point origin, float scaleFactor);
 
     private Paint paint;
 

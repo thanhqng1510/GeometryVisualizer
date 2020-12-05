@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 
 public class Rect extends Shape {
@@ -40,19 +39,34 @@ public class Rect extends Shape {
     }
 
     @Override
-    public void startDraw(MouseEvent e) {
-        topLeft = new Point(e.getX(), e.getY());
-        bottomRight = (Point) topLeft.clone();
+    public void startDraw(Point location) {
+        topLeft = location;
+        bottomRight = location;
     }
 
     @Override
-    public void onDraw(MouseEvent e) {
-        bottomRight = new Point(e.getX(), e.getY());
+    public void onDraw(Point location) {
+        bottomRight = location;
     }
 
     @Override
     public Shape endDraw() {
         return this;
+    }
+
+    @Override
+    public void translate(int dx, int dy) {
+        topLeft.translate(dx, dy);
+        bottomRight.translate(dx, dy);
+    }
+
+    @Override
+    public void scale(Point origin, float scaleFactor) {
+        topLeft.x = (int) ((topLeft.x - origin.x) * scaleFactor + origin.x);
+        topLeft.y = (int) ((topLeft.y - origin.y) * scaleFactor + origin.y);
+
+        bottomRight.x = (int) ((bottomRight.x - origin.x) * scaleFactor + origin.x);
+        bottomRight.y = (int) ((bottomRight.y - origin.y) * scaleFactor + origin.y);
     }
 
     private Point topLeft;
