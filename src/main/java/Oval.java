@@ -83,7 +83,13 @@ public class Oval extends Shape {
 
     @Override
     public void scale(Point origin, float scaleFactor) {
+        topLeft.x = (int) ((topLeft.x - origin.x) * scaleFactor + origin.x);
+        topLeft.y = (int) ((topLeft.y - origin.y) * scaleFactor + origin.y);
 
+        anchorX = topLeft.x;
+        anchorY = topLeft.y;
+        width *= scaleFactor;
+        height *= scaleFactor;
     }
 
     private Point topLeft;

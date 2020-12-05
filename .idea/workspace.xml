@@ -29,20 +29,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0a240e6-5f18-4902-9d08-32f677081cd0" name="Default Changelist" comment="Fix bug when drawing oval">
-      <change afterPath="$PROJECT_DIR$/res/moveAroundBtn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/zoomInBtn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/zoomOutBtn.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CursorMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CursorMode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DrawArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DrawArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Line.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Oval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Oval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Rect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Rect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Shape.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +195,7 @@
       <workItem from="1606989035662" duration="2963000" />
       <workItem from="1606992273287" duration="13131000" />
       <workItem from="1607012879171" duration="45867000" />
-      <workItem from="1607147338290" duration="5322000" />
+      <workItem from="1607147338290" duration="8037000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor Graphics2D to context">
       <created>1606980389875</created>
@@ -233,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607120458271</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add zoom and move around">
+      <created>1607154321492</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1607154321492</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -254,6 +253,7 @@
     <MESSAGE value="Add button icons&#10;Add draw mode&#10;Add more draw shape" />
     <MESSAGE value="Add oval draw shape" />
     <MESSAGE value="Fix bug when drawing oval" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix bug when drawing oval" />
+    <MESSAGE value="Add zoom and move around" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add zoom and move around" />
   </component>
 </project>
