@@ -29,11 +29,11 @@ public enum ShapeType {
 
     public Shape getInstance(Paint paintColor) {
         if (value == LINE.value)
-            return new Line(null, null, paintColor);
+            return new Line(0, 0, 0, 0, paintColor);
         else if (value == RECT.value)
-            return new Rect(null, null, paintColor);
+            return new Rect(0, 0, 0, 0, paintColor);
         else if (value == OVAL.value)
-            return new Oval(new Point(), 1, 1, paintColor);
+            return new Oval(0, 0, 0, 0, paintColor);
         return null;
     }
 

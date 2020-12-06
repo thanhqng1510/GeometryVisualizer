@@ -3,47 +3,53 @@ import java.awt.*;
 
 public class Line extends Shape {
 
-    public Line(Point start, Point end, Paint paint) {
+    public Line(int xStart, int yStart, int xEnd, int yEnd, Paint paint) {
         super(paint);
-        this.start = start;
-        this.end = end;
+        start = new Point(xStart, yStart);
+        end = new Point(xEnd, yEnd);
     }
 
     public Point getStart() {
         return start;
     }
 
-    public void setStart(Point start) {
-        this.start = start;
+    public void setStart(int x, int y) {
+        start.x = x;
+        start.y = y;
     }
 
     public Point getEnd() {
         return end;
     }
 
-    public void setEnd(Point end) {
-        this.end = end;
+    public void setEnd(int x, int y) {
+        end.x = x;
+        end.y = y;
     }
 
     @Override
     public void drawOn(Graphics2D g2d) {
         Paint oldPaint = g2d.getPaint();
-
         g2d.setPaint(getPaint());
+
         g2d.drawLine(start.x, start.y, end.x, end.y);
 
         g2d.setPaint(oldPaint);
     }
 
     @Override
-    public void startDraw(Point location) {
-        start = location;
-        end = location;
+    public void startDraw(int x, int y) {
+        start.x = x;
+        start.y = y;
+
+        end.x = x;
+        end.y = y;
     }
 
     @Override
-    public void onDraw(Point location) {
-        end = location;
+    public void onDraw(int x, int y) {
+        end.x = x;
+        end.y = y;
     }
 
     @Override
@@ -58,15 +64,15 @@ public class Line extends Shape {
     }
 
     @Override
-    public void scale(Point origin, float scaleFactor) {
-        start.x = (int) ((start.x - origin.x) * scaleFactor + origin.x);
-        start.y = (int) ((start.y - origin.y) * scaleFactor + origin.y);
+    public void scale(int xOrigin, int yOrigin, float scaleFactor) {
+        start.x = (int) ((start.x - xOrigin) * scaleFactor + xOrigin);
+        start.y = (int) ((start.y - yOrigin) * scaleFactor + yOrigin);
 
-        end.x = (int) ((end.x - origin.x) * scaleFactor + origin.x);
-        end.y = (int) ((end.y - origin.y) * scaleFactor + origin.y);
+        end.x = (int) ((end.x - xOrigin) * scaleFactor + xOrigin);
+        end.y = (int) ((end.y - yOrigin) * scaleFactor + yOrigin);
     }
 
-    private Point start;
-    private Point end;
+    private final Point start;
+    private final Point end;
 
 }

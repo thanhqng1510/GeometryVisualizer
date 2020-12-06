@@ -32,11 +32,13 @@ public class MainWindow extends JFrame {
                 }
                 else if (e.getSource() == zoomInBtn) {
                     drawArea.setCursorMode(CursorMode.ZOOM_IN);
-                    drawArea.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                    Image cursorImage = new ImageIcon("./res/zoomInBtn.png").getImage();
+                    drawArea.setCursor(getToolkit().createCustomCursor(cursorImage, new Point(), null));
                 }
                 else if (e.getSource() == zoomOutBtn) {
                     drawArea.setCursorMode(CursorMode.ZOOM_OUT);
-                    drawArea.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+                    Image cursorImage = new ImageIcon("./res/zoomOutBtn.png").getImage();
+                    drawArea.setCursor(getToolkit().createCustomCursor(cursorImage, new Point(), null));
                 }
                 else if (e.getSource() == shapeTypeComboBox) {
                     ShapeType shapeType = (ShapeType) ((JComboBox) e.getSource()).getSelectedItem();
@@ -57,6 +59,7 @@ public class MainWindow extends JFrame {
             }
 
         };
+
         this.keyAdapter = new KeyAdapter() {
 
             @Override
@@ -97,6 +100,12 @@ public class MainWindow extends JFrame {
             }
 
         });
+        drawArea.addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0)
+                drawArea.zoomIn();
+            else
+                drawArea.zoomOut();
+        });
         container.add(drawArea, BorderLayout.CENTER);
 
         // Create color choose panel (not button)
@@ -129,6 +138,8 @@ public class MainWindow extends JFrame {
         zoomOutBtn.addActionListener(toolbarAdapter);
 
         shapeTypeComboBox = new JComboBox<>(ShapeType.getAllTypes());
+        shapeTypeComboBox.setBackground(toolbarColor);
+        shapeTypeComboBox.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
         shapeTypeComboBox.setRenderer(new DefaultListCellRenderer() {
 
                 @Override

@@ -3,33 +3,35 @@ import java.awt.*;
 
 public class Rect extends Shape {
 
-    public Rect(Point topLeft, Point bottomRight, Paint paint) {
+    public Rect(int topLeftX, int topLeftY, int bottomRightX, int bottomRightY, Paint paint) {
         super(paint);
-        this.topLeft = topLeft;
-        this.bottomRight = bottomRight;
+        topLeft = new Point(topLeftX, topLeftY);
+        bottomRight = new Point(bottomRightX, bottomRightY);
     }
 
     public Point getTopLeft() {
         return topLeft;
     }
 
-    public void setTopLeft(Point topLeft) {
-        this.topLeft = topLeft;
+    public void setTopLeft(int x, int y) {
+        topLeft.x = x;
+        topLeft.y = y;
     }
 
     public Point getBottomRight() {
         return bottomRight;
     }
 
-    public void setBottomRight(Point bottomRight) {
-        this.bottomRight = bottomRight;
+    public void setBottomRight(int x, int y) {
+        bottomRight.x = x;
+        bottomRight.y = y;
     }
 
     @Override
     public void drawOn(Graphics2D g2d) {
         Paint oldPaint = g2d.getPaint();
-
         g2d.setPaint(getPaint());
+
         g2d.drawLine(topLeft.x, topLeft.y, bottomRight.x, topLeft.y);
         g2d.drawLine(bottomRight.x, topLeft.y, bottomRight.x, bottomRight.y);
         g2d.drawLine(bottomRight.x, bottomRight.y, topLeft.x, bottomRight.y);
@@ -39,14 +41,18 @@ public class Rect extends Shape {
     }
 
     @Override
-    public void startDraw(Point location) {
-        topLeft = location;
-        bottomRight = location;
+    public void startDraw(int x, int y) {
+        topLeft.x = x;
+        topLeft.y = y;
+
+        bottomRight.x = x;
+        bottomRight.y = y;
     }
 
     @Override
-    public void onDraw(Point location) {
-        bottomRight = location;
+    public void onDraw(int x, int y) {
+        bottomRight.x = x;
+        bottomRight.y = y;
     }
 
     @Override
@@ -61,15 +67,15 @@ public class Rect extends Shape {
     }
 
     @Override
-    public void scale(Point origin, float scaleFactor) {
-        topLeft.x = (int) ((topLeft.x - origin.x) * scaleFactor + origin.x);
-        topLeft.y = (int) ((topLeft.y - origin.y) * scaleFactor + origin.y);
+    public void scale(int xOrigin, int yOrigin, float scaleFactor) {
+        topLeft.x = (int) ((topLeft.x - xOrigin) * scaleFactor + xOrigin);
+        topLeft.y = (int) ((topLeft.y - yOrigin) * scaleFactor + yOrigin);
 
-        bottomRight.x = (int) ((bottomRight.x - origin.x) * scaleFactor + origin.x);
-        bottomRight.y = (int) ((bottomRight.y - origin.y) * scaleFactor + origin.y);
+        bottomRight.x = (int) ((bottomRight.x - xOrigin) * scaleFactor + xOrigin);
+        bottomRight.y = (int) ((bottomRight.y - yOrigin) * scaleFactor + yOrigin);
     }
 
-    private Point topLeft;
-    private Point bottomRight;
+    private final Point topLeft;
+    private final Point bottomRight;
 
 }

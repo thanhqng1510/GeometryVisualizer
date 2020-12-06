@@ -13,10 +13,11 @@ public class DrawArea extends JPanel {
         shouldDrawGrid = true;
         paintColor = Color.BLACK;
         data = new ArrayList<>();
-        scaleFactor = .02f;
+        scaleFactor = .025f;
         userCurShape = null;
         isDrawing = false;
         curMousePos = null;
+        strokeThickness = 3;
 
         setDoubleBuffered(true);
 
@@ -31,18 +32,16 @@ public class DrawArea extends JPanel {
                         // TODO: add more features
                         break;
                     case ZOOM_IN:
-                        for (Shape s : data)
-                            s.scale(curMousePos, 1 + scaleFactor * 5);
+                        zoomIn();
                         break;
                     case ZOOM_OUT:
-                        for (Shape s : data)
-                            s.scale(curMousePos, 1 - scaleFactor * 5);
+                        zoomOut();
                         break;
                     case DRAW:
                         if (!isDrawing) {
                             userCurShape = drawShapeType.getInstance(paintColor);
                             assert userCurShape != null;
-                            userCurShape.startDraw(curMousePos);
+                            userCurShape.startDraw(curMousePos.x, curMousePos.y);
                         }
                         else
                             data.add(userCurShape.endDraw());
@@ -67,7 +66,7 @@ public class DrawArea extends JPanel {
                         break;
                     case DRAW:
                         if (isDrawing)
-                            userCurShape.onDraw(curMousePos);
+                            userCurShape.onDraw(curMousePos.x, curMousePos.y);
                         break;
                 }
             }
@@ -88,16 +87,14 @@ public class DrawArea extends JPanel {
                             s.translate(curMousePos.x - oldMousePos.x, curMousePos.y - oldMousePos.y);
                         break;
                     case ZOOM_IN:
-                        for (Shape s : data)
-                            s.scale(curMousePos, 1 + scaleFactor);
+                        zoomIn();
                         break;
                     case ZOOM_OUT:
-                        for (Shape s : data)
-                            s.scale(curMousePos, 1 - scaleFactor);
+                        zoomOut();
                         break;
                     case DRAW:
                         if (isDrawing)
-                            userCurShape.onDraw(curMousePos);
+                            userCurShape.onDraw(curMousePos.x, curMousePos.y);
                         break;
                 }
             }
@@ -130,15 +127,22 @@ public class DrawArea extends JPanel {
     }
 
     public void stopDrawing() {
-        if (isDrawing) {
-            isDrawing = false;
-            data.add(userCurShape.endDraw());
-            repaint();
-        }
+        isDrawing = false;
+        repaint();
     }
 
     public void toggleGridView() {
         shouldDrawGrid = !shouldDrawGrid;
+    }
+
+    public void zoomIn() {
+        for (Shape s : data)
+            s.scale(curMousePos.x, curMousePos.y, 1 + scaleFactor);
+    }
+
+    public void zoomOut() {
+        for (Shape s : data)
+            s.scale(curMousePos.x, curMousePos.y, 1 - scaleFactor);
     }
 
     private Graphics2D g2d;
@@ -148,6 +152,7 @@ public class DrawArea extends JPanel {
     private Paint paintColor;
     private final ArrayList<Shape> data;
     private final float scaleFactor;
+    private final int strokeThickness;
 
     private Shape userCurShape;
     private boolean isDrawing;
@@ -172,8 +177,8 @@ public class DrawArea extends JPanel {
     private void drawGrid() {
         int w = getWidth();
         int h = getHeight();
-        int rows = h / 30;
-        int cols = w / 30;
+        int rows = h / 40;
+        int cols = w / 40;
 
         g2d.setPaint(Color.decode("#bababa"));
 
@@ -189,11 +194,15 @@ public class DrawArea extends JPanel {
     }
 
     private void doPainting() {
+        g2d.setStroke(new BasicStroke(strokeThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
+
         if (isDrawing)
             userCurShape.drawOn(g2d);
 
         for (Shape s : data)
             s.drawOn(g2d);
+
+        g2d.setStroke(new BasicStroke());
     }
 
     private void clear() {
