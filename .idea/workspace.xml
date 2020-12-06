@@ -28,9 +28,18 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0a240e6-5f18-4902-9d08-32f677081cd0" name="Default Changelist" comment="">
+    <list default="true" id="e0a240e6-5f18-4902-9d08-32f677081cd0" name="Default Changelist" comment="Fix bug when drawing oval">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DrawArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DrawArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Line.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Oval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Oval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Rect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Rect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Shape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShapeType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +82,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -89,21 +105,27 @@
     </option>
   </component>
   <component name="ProjectId" id="1k3bcQcGj1yn9m1mouQH27SV3mz" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager" selected="Application.Application">
+  <component name="RunManager" selected="Gradle.GeometryVisualizer [Application]">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Application" />
       <module name="GeometryVisualizer.main" />
@@ -116,7 +138,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -125,9 +147,11 @@
             <option value="Application" />
           </list>
         </option>
-        <option name="vmOptions" />
+        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
     <configuration name="GeometryVisualizer [test_MongoDB]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -146,14 +170,21 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.GeometryVisualizer [Application]" />
+      <item itemvalue="Gradle.GeometryVisualizer [test_MongoDB]" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.GeometryVisualizer [Application]" />
         <item itemvalue="Application.Application" />
         <item itemvalue="Gradle.GeometryVisualizer [test_MongoDB]" />
-        <item itemvalue="Gradle.GeometryVisualizer [Application]" />
       </list>
     </recent_temporary>
   </component>
@@ -166,8 +197,56 @@
       <option name="presentableId" value="Default" />
       <updated>1604932301458</updated>
       <workItem from="1606957679941" duration="1875000" />
-      <workItem from="1606979059202" duration="382000" />
+      <workItem from="1606979059202" duration="2730000" />
+      <workItem from="1606989035662" duration="2963000" />
+      <workItem from="1606992273287" duration="13131000" />
+      <workItem from="1607012879171" duration="45867000" />
+      <workItem from="1607147338290" duration="17407000" />
+      <workItem from="1607223555645" duration="5101000" />
     </task>
+    <task id="LOCAL-00001" summary="Refactor Graphics2D to context">
+      <created>1606980389875</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606980389877</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add button icons&#10;Add draw mode&#10;Add more draw shape">
+      <created>1607113390554</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607113390554</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add oval draw shape">
+      <created>1607115941266</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607115941266</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix bug when drawing oval">
+      <created>1607120458271</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607120458271</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add zoom and move around">
+      <created>1607154321492</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1607154321492</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix move features">
+      <created>1607156975237</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1607156975237</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,30 +261,14 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="334" y="88" key="#Project_Structure" timestamp="1606957877943">
-      <screen x="0" y="0" width="1707" height="1027" />
-    </state>
-    <state x="334" y="88" key="#Project_Structure/0.0.1707.1027@0.0.1707.1027" timestamp="1606957877943" />
-    <state x="659" y="220" key="#com.intellij.ide.util.MemberChooser" timestamp="1606958617729">
-      <screen x="0" y="0" width="1707" height="1027" />
-    </state>
-    <state x="659" y="220" key="#com.intellij.ide.util.MemberChooser/0.0.1707.1027@0.0.1707.1027" timestamp="1606958617729" />
-    <state width="1663" height="232" key="GridCell.Tab.0.bottom" timestamp="1606959569118">
-      <screen x="0" y="0" width="1707" height="1027" />
-    </state>
-    <state width="1663" height="232" key="GridCell.Tab.0.bottom/0.0.1707.1027@0.0.1707.1027" timestamp="1606959569118" />
-    <state width="1663" height="232" key="GridCell.Tab.0.center" timestamp="1606959569117">
-      <screen x="0" y="0" width="1707" height="1027" />
-    </state>
-    <state width="1663" height="232" key="GridCell.Tab.0.center/0.0.1707.1027@0.0.1707.1027" timestamp="1606959569117" />
-    <state width="1663" height="232" key="GridCell.Tab.0.left" timestamp="1606959569117">
-      <screen x="0" y="0" width="1707" height="1027" />
-    </state>
-    <state width="1663" height="232" key="GridCell.Tab.0.left/0.0.1707.1027@0.0.1707.1027" timestamp="1606959569117" />
-    <state width="1663" height="232" key="GridCell.Tab.0.right" timestamp="1606959569118">
-      <screen x="0" y="0" width="1707" height="1027" />
-    </state>
-    <state width="1663" height="232" key="GridCell.Tab.0.right/0.0.1707.1027@0.0.1707.1027" timestamp="1606959569118" />
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Refactor Graphics2D to context" />
+    <MESSAGE value="Add button icons&#10;Add draw mode&#10;Add more draw shape" />
+    <MESSAGE value="Add oval draw shape" />
+    <MESSAGE value="Fix bug when drawing oval" />
+    <MESSAGE value="Add zoom and move around" />
+    <MESSAGE value="Fix move features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix move features" />
   </component>
 </project>

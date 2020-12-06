@@ -1,80 +1,205 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 
-public class MainWindow extends JFrame implements ActionListener {
+public class MainWindow extends JFrame {
 
-    private final JButton clearBtn;
-    private final JButton redBtn;
-    private final JButton greenBtn;
-    private final JButton blueBtn;
-    private final JButton blackBtn;
-    private final JButton magentaBtn;
-    private final DrawArea drawArea;
-
-    public MainWindow() {
+    public MainWindow(Color themeColor) {
         super("Untitled*");
         // TODO: work-around
 
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
 
+        this.themeColor = themeColor;
+        this.toolbarColor = Color.decode("#e9e9e9");
+        this.componentBorderSize = 5;
+        this.normalFontSize = 14;
+
+        this.toolbarAdapter = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == selectCursorBtn) {
+                    drawArea.setCursorMode(CursorMode.SELECT);
+                    drawArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+                else if (e.getSource() == moveAroundBtn) {
+                    drawArea.setCursorMode(CursorMode.MOVE_AROUND);
+                    drawArea.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+                }
+                else if (e.getSource() == zoomInBtn) {
+                    drawArea.setCursorMode(CursorMode.ZOOM_IN);
+                    Image cursorImage = new ImageIcon("./res/zoomInBtn.png").getImage();
+                    drawArea.setCursor(getToolkit().createCustomCursor(cursorImage, new Point(), null));
+                }
+                else if (e.getSource() == zoomOutBtn) {
+                    drawArea.setCursorMode(CursorMode.ZOOM_OUT);
+                    Image cursorImage = new ImageIcon("./res/zoomOutBtn.png").getImage();
+                    drawArea.setCursor(getToolkit().createCustomCursor(cursorImage, new Point(), null));
+                }
+                else if (e.getSource() == shapeTypeComboBox) {
+                    ShapeType shapeType = (ShapeType) ((JComboBox) e.getSource()).getSelectedItem();
+                    drawArea.setDrawShapeType(shapeType);
+                    drawArea.setCursorMode(CursorMode.DRAW);
+                    drawArea.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                }
+                else if (e.getSource() == toggleGridBtn)
+                    drawArea.toggleGridView();
+                else if (e.getSource() == changeColorBtn) {
+                    JDialog dialog = JColorChooser.createDialog(
+                            drawArea, "Choose color", false, colorChooser,
+                            e1 -> drawArea.setPaint(colorChooser.getColor()), null);
+                    dialog.setVisible(true);
+                }
+                else if (e.getSource() == clearBtn)
+                    drawArea.clearScreen();
+            }
+
+        };
+
+        this.keyAdapter = new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+                    drawArea.stopDrawing();
+            }
+
+        };
+        this.addKeyListener(keyAdapter);
+
         // Add draw area to the main window
         drawArea = new DrawArea();
+        drawArea.addMouseMotionListener(new MouseMotionAdapter() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                xCoordStatus.setText("<html><b>X: " + e.getX() + "</b></html>");
+                yCoordStatus.setText("<html><b>Y: " + e.getY() + "</b></html>");
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                xCoordStatus.setText("<html><b>X: " + e.getX() + "</b></html>");
+                yCoordStatus.setText("<html><b>Y: " + e.getY() + "</b></html>");
+            }
+
+        });
+        drawArea.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+
+                if (!hasFocus())
+                    requestFocus();
+            }
+
+        });
+        drawArea.addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0)
+                drawArea.zoomIn();
+            else
+                drawArea.zoomOut();
+        });
         container.add(drawArea, BorderLayout.CENTER);
 
-        // Create control bar
-        JPanel control_bar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        control_bar.setBackground(Color.decode("#3598DC"));
-        control_bar.setBorder(new EmptyBorder(5, 5, 5, 5));
+        // Create color choose panel (not button)
+        colorChooser = new JColorChooser((Color) drawArea.getPaint());
 
-        clearBtn = new JButton("Clear");
-        clearBtn.addActionListener(this);
+        // Create toolbar
+        toolbar = new JToolBar(JToolBar.HORIZONTAL);
+        toolbar.setBackground(toolbarColor);
+        toolbar.setRequestFocusEnabled(false);
+        toolbar.setBorder(new EmptyBorder(componentBorderSize, componentBorderSize, componentBorderSize, componentBorderSize));
 
-        redBtn = new JButton("Red");
-        redBtn.addActionListener(this);
+        selectCursorBtn = new JButton(new ImageIcon("./res/selectCursorBtn.png"));
+        selectCursorBtn.setBackground(toolbarColor);
+        selectCursorBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        selectCursorBtn.addActionListener(toolbarAdapter);
 
-        greenBtn = new JButton("Green");
-        greenBtn.addActionListener(this);
+        moveAroundBtn = new JButton(new ImageIcon("./res/moveAroundBtn.png"));
+        moveAroundBtn.setBackground(toolbarColor);
+        moveAroundBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        moveAroundBtn.addActionListener(toolbarAdapter);
 
-        blueBtn = new JButton("Blue");
-        blueBtn.addActionListener(this);
+        zoomInBtn = new JButton(new ImageIcon("./res/zoomInBtn.png"));
+        zoomInBtn.setBackground(toolbarColor);
+        zoomInBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        zoomInBtn.addActionListener(toolbarAdapter);
 
-        blackBtn = new JButton("Black");
-        blackBtn.addActionListener(this);
+        zoomOutBtn = new JButton(new ImageIcon("./res/zoomOutBtn.png"));
+        zoomOutBtn.setBackground(toolbarColor);
+        zoomOutBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        zoomOutBtn.addActionListener(toolbarAdapter);
 
-        magentaBtn = new JButton("Magenta");
-        magentaBtn.addActionListener(this);
+        shapeTypeComboBox = new JComboBox<>(ShapeType.getAllTypes());
+        shapeTypeComboBox.setBackground(toolbarColor);
+        shapeTypeComboBox.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        shapeTypeComboBox.setRenderer(new DefaultListCellRenderer() {
 
-        control_bar.add(clearBtn);
-        control_bar.add(redBtn);
-        control_bar.add(greenBtn);
-        control_bar.add(blueBtn);
-        control_bar.add(blackBtn);
-        control_bar.add(magentaBtn);
+                @Override
+                public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                    JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-        // Add control bar to the main window
-        container.add(control_bar, BorderLayout.NORTH);
+                    ShapeType shapeType = (ShapeType) value;
+                    label.setText(shapeType.toString());
+                    label.setIcon(new ImageIcon(shapeType.getIconPath()));
+
+                    return label;
+                }
+
+        });
+        shapeTypeComboBox.addActionListener(toolbarAdapter);
+        shapeTypeComboBox.setMaximumSize(shapeTypeComboBox.getPreferredSize());
+
+        toggleGridBtn = new JButton(new ImageIcon("./res/toggleGridBtn.png"));
+        toggleGridBtn.setBackground(toolbarColor);
+        toggleGridBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        toggleGridBtn.addActionListener(toolbarAdapter);
+
+        changeColorBtn = new JButton("Color", new ImageIcon("./res/changeColorBtn.png"));
+        changeColorBtn.setBackground(toolbarColor);
+        changeColorBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        changeColorBtn.addActionListener(toolbarAdapter);
+
+        clearBtn = new JButton("Clear", new ImageIcon("./res/clearBtn.png"));
+        clearBtn.setBackground(toolbarColor);
+        clearBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        clearBtn.addActionListener(toolbarAdapter);
+
+        toolbar.add(selectCursorBtn);
+        toolbar.add(moveAroundBtn);
+        toolbar.add(zoomInBtn);
+        toolbar.add(zoomOutBtn);
+        toolbar.add(shapeTypeComboBox);
+        toolbar.add(toggleGridBtn);
+        toolbar.add(changeColorBtn);
+        toolbar.add(clearBtn);
+
+        // Add toolbar to the main window
+        container.add(toolbar, BorderLayout.NORTH);
 
         // Create status bar
         JPanel status_bar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        status_bar.setBackground(Color.decode("#3598DC"));
-        status_bar.setBorder(new EmptyBorder(5, 5, 5, 5));
+        status_bar.setBackground(themeColor);
+        status_bar.setBorder(new EmptyBorder(componentBorderSize, componentBorderSize, componentBorderSize, componentBorderSize));
 
-        JLabel x_coord = new JLabel("X: 100");
-        x_coord.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        x_coord.setForeground(Color.white);
+        xCoordStatus = new JLabel("<html><b>X: 0</b></html>");
+        xCoordStatus.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, normalFontSize));
+        xCoordStatus.setForeground(Color.white);
 
-        JLabel y_coord = new JLabel("Y: 100");
-        y_coord.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        y_coord.setForeground(Color.white);
+        yCoordStatus = new JLabel("<html><b>Y: 0</b></html>");
+        yCoordStatus.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, normalFontSize));
+        yCoordStatus.setForeground(Color.white);
 
-        status_bar.add(x_coord);
-        status_bar.add(new JLabel("\t"));
-        status_bar.add(y_coord);
+        status_bar.add(xCoordStatus);
+        status_bar.add(new JLabel("  "));
+        status_bar.add(yCoordStatus);
 
         // Add status bar to the main window
         container.add(status_bar, BorderLayout.SOUTH);
@@ -84,23 +209,30 @@ public class MainWindow extends JFrame implements ActionListener {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         setVisible(true);
+        setFocusable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == clearBtn)
-            drawArea.clear();
-        else if (e.getSource() == redBtn)
-            drawArea.setColor(Color.red);
-        else if (e.getSource() == greenBtn)
-            drawArea.setColor(Color.green);
-        else if (e.getSource() == blueBtn)
-            drawArea.setColor(Color.blue);
-        else if (e.getSource() == blackBtn)
-            drawArea.setColor(Color.black);
-        else if (e.getSource() == magentaBtn)
-            drawArea.setColor(Color.magenta);
-    }
+    private final Color themeColor;
+    private final Color toolbarColor;
+    private final int componentBorderSize;
+    private final int normalFontSize;
+
+    private final JToolBar toolbar;
+    private final JButton selectCursorBtn;
+    private final JButton moveAroundBtn;
+    private final JButton zoomInBtn;
+    private final JButton zoomOutBtn;
+    private final JComboBox<ShapeType> shapeTypeComboBox;
+    private final JButton toggleGridBtn;
+    private final JButton changeColorBtn;
+    private final JColorChooser colorChooser;
+    private final JButton clearBtn;
+    private final DrawArea drawArea;
+    private final JLabel xCoordStatus;
+    private final JLabel yCoordStatus;
+
+    private final ActionListener toolbarAdapter;
+    private final KeyAdapter keyAdapter;
 
 }
