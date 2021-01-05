@@ -1,8 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 public class DrawArea extends JComponent {
@@ -64,6 +68,27 @@ public class DrawArea extends JComponent {
             clear();
         }
         g.drawImage(image, 0, 0, null);
+    }
+
+    public void setImage(Image sa){
+        this.image = sa;
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void ImageTofile(String dst){
+        System.out.println(dst);
+        int width = image.getWidth(this);
+        int height = image.getHeight(this);
+        BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+        Graphics g = bi.getGraphics();
+        try {
+            g.drawImage(image, 0, 0, null);
+            ImageIO.write(bi, "jpg", new File(dst));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class SignUp extends JFrame implements ActionListener, MouseListener {
     private final JButton signUp;
     private final JButton signIn;
-    private final MongoDb db = new MongoDb();
+    private final MongoDb db = new MongoDb("");
     public JLabel war = new JLabel();
     public JTextField user= new JTextField(20);
     public JPasswordField password= new JPasswordField(20);

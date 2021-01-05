@@ -1,11 +1,11 @@
 public class Application {
-
-    public Application() {
-
+    private String email;
+    public Application(String email1) {
+        this.email = email1;
     }
 
     public void start() {
-        MainWindow main_window = new MainWindow();
+        MainWindow main_window = new MainWindow(this.email);
     }
 
     public void exit() {
@@ -13,8 +13,7 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        Application app = new Application();
-        app.start();
+        MainLogin ml = new MainLogin();
     }
 
 }

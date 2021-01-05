@@ -5,10 +5,11 @@ public class Login extends JFrame implements ActionListener, MouseListener {
     private final JButton forgotPass;
     private final JButton draw;
     private final JButton signup;
-    private final MongoDb db = new MongoDb();
+    private final MongoDb db = new MongoDb("");
     public JTextField email= new JTextField(20);
     public JPasswordField password= new JPasswordField(20);
     public JLabel war= new JLabel();
+
     Login(){
         forgotPass= new JButton("Forgot password?");
         draw= new JButton("LET'S DRAW");
@@ -174,11 +175,10 @@ public class Login extends JFrame implements ActionListener, MouseListener {
         }
         else if(e.getSource()==draw)
         {
-
             int flag = db.login(email.getText(),String.valueOf(password.getPassword()));
             if (flag == 0){
                 setVisible(false);
-                Application app = new Application();
+                Application app = new Application(email.getText());
                 app.start();
             }else if (flag == 1){
                 war.setText("Account has not been found");
