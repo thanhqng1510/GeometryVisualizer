@@ -4,7 +4,9 @@ public enum CursorMode {
     MOVE_AROUND(1),
     ZOOM_IN(2),
     ZOOM_OUT(3),
-    DRAW(4);
+    DRAW(4),
+    CHOOSE(5);
+
 
     public int getValue() {
         return value;

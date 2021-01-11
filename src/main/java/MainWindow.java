@@ -63,6 +63,15 @@ public class MainWindow extends JFrame {
 
                 else if(e.getSource()==redoButton)
                     drawArea.redo();
+
+                else if(e.getSource()==clickButton)
+                {
+                    drawArea.setCursorMode(CursorMode.CHOOSE);
+                    drawArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+
+                else if(e.getSource()==deleteButton)
+                    drawArea.delete();
             }
 
         };
@@ -189,6 +198,16 @@ public class MainWindow extends JFrame {
         redoButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
         redoButton.addActionListener(toolbarAdapter);
 
+        clickButton= new JButton("ClickShape");
+        clickButton.setBackground(toolbarColor);
+        clickButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        clickButton.addActionListener(toolbarAdapter);
+
+        deleteButton= new JButton("Delete");
+        deleteButton.setBackground(toolbarColor);
+        deleteButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        deleteButton.addActionListener(toolbarAdapter);
+
 
         toolbar.add(selectCursorBtn);
         toolbar.add(moveAroundBtn);
@@ -200,6 +219,8 @@ public class MainWindow extends JFrame {
         toolbar.add(clearBtn);
         toolbar.add(undoButton);
         toolbar.add(redoButton);
+        toolbar.add(clickButton);
+        toolbar.add(deleteButton);
 
         // Add toolbar to the main window
         container.add(toolbar, BorderLayout.NORTH);
@@ -254,6 +275,8 @@ public class MainWindow extends JFrame {
 
     private final JButton undoButton;
     private final JButton redoButton;
+    private final JButton clickButton;
+    private final JButton deleteButton;
 
 
     private final ActionListener toolbarAdapter;

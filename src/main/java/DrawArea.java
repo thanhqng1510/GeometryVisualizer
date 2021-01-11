@@ -22,6 +22,7 @@ public class DrawArea extends JPanel{
         strokeThickness = 3;
         preData= new ArrayList<>();
         nextData= new ArrayList<>();
+        click= new Point();
 
 
         setDoubleBuffered(true);
@@ -56,6 +57,10 @@ public class DrawArea extends JPanel{
 
                         isDrawing = !isDrawing;
                         break;
+                    case CHOOSE:
+                        click= new Point(curMousePos);
+                        break;
+
                 }
             }
 
@@ -126,6 +131,21 @@ public class DrawArea extends JPanel{
         nextData.remove(nextData.size()-1);
     }
 
+    private ArrayList<Shape> chooseShape(){
+        ArrayList<Shape> a= new ArrayList<Shape>();
+        for(Shape s: data)
+        {
+            if(s.contain(click.x, click.y))
+                a.add(s);
+        }
+        return a;
+    }
+
+    public void delete(){
+        for(Shape s: chooseShape())
+            data.remove(s);
+    }
+
     public void setPaint(Paint paint) {
         paintColor = paint;
         g2d.setPaint(paintColor);
@@ -179,6 +199,7 @@ public class DrawArea extends JPanel{
 
     private final ArrayList<ArrayList<Shape>> preData;
     private final ArrayList<ArrayList<Shape>> nextData;
+    private Point click;
 
     @Override
     protected void paintComponent(Graphics g) {

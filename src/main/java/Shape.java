@@ -30,8 +30,6 @@ public abstract class Shape {
 
     public abstract boolean contain(int x,int y);
 
-
-    private boolean click;
     private Paint paint;
 
 }
