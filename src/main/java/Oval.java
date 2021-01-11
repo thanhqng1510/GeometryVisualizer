@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 
 public class Oval extends Shape {
@@ -92,6 +93,11 @@ public class Oval extends Shape {
         height *= scaleFactor;
     }
 
+    @Override
+    public boolean contain(int x,int y){
+        Ellipse2D e= new Ellipse2D.Double(topLeft.x, topLeft.y, width, height);
+        return e.contains(x, y);
+    }
 
     private final Point topLeft;
     private int anchorX;

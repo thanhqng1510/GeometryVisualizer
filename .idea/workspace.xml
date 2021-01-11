@@ -33,13 +33,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DrawArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DrawArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Line.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Oval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Oval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Rect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Rect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Shape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShapeType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,9 +143,7 @@
         </option>
         <option name="vmOptions" value="" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
     <configuration name="GeometryVisualizer [test_MongoDB]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -170,9 +162,7 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
     <list>
@@ -270,5 +260,23 @@
     <MESSAGE value="Add zoom and move around" />
     <MESSAGE value="Fix move features" />
     <option name="LAST_COMMIT_MESSAGE" value="Fix move features" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1358" height="130" key="GridCell.Tab.0.bottom" timestamp="1610381096994">
+      <screen x="0" y="23" width="1440" height="801" />
+    </state>
+    <state width="1358" height="130" key="GridCell.Tab.0.bottom/0.23.1440.801@0.23.1440.801" timestamp="1610381096994" />
+    <state width="1358" height="130" key="GridCell.Tab.0.center" timestamp="1610381096994">
+      <screen x="0" y="23" width="1440" height="801" />
+    </state>
+    <state width="1358" height="130" key="GridCell.Tab.0.center/0.23.1440.801@0.23.1440.801" timestamp="1610381096994" />
+    <state width="1358" height="130" key="GridCell.Tab.0.left" timestamp="1610381096993">
+      <screen x="0" y="23" width="1440" height="801" />
+    </state>
+    <state width="1358" height="130" key="GridCell.Tab.0.left/0.23.1440.801@0.23.1440.801" timestamp="1610381096993" />
+    <state width="1358" height="130" key="GridCell.Tab.0.right" timestamp="1610381096994">
+      <screen x="0" y="23" width="1440" height="801" />
+    </state>
+    <state width="1358" height="130" key="GridCell.Tab.0.right/0.23.1440.801@0.23.1440.801" timestamp="1610381096994" />
   </component>
 </project>
