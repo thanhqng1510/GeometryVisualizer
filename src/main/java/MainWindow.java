@@ -36,10 +36,6 @@ public class MainWindow extends JFrame implements ActionListener{
         fileOpenProJect.setActionCommand("OpenCloud");
         fileOpenProJect.addActionListener(this);
 
-        JMenuItem fileOR= new JMenuItem("Open recent");
-        fileOR.setActionCommand("Open recent");
-        fileOR.addActionListener(this);
-
         JMenuItem fileSave= new JMenuItem("Save");
         fileSave.setActionCommand("Save");
         fileSave.addActionListener(this);
@@ -68,7 +64,6 @@ public class MainWindow extends JFrame implements ActionListener{
         file.add(fileNew);
         file.add(fileOpen);
         file.add(fileOpenProJect);
-        file.add(fileOR);
         file.add(fileSave);
         file.add(fileSaveAs);
         file.add(fileClose);
@@ -314,7 +309,11 @@ public class MainWindow extends JFrame implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
+        if (e.getActionCommand() == "New"){
+            drawArea.clearScreen();
+        }else if (e.getActionCommand() == "Close"){
+            System.exit(0);
+        }else
         if (e.getActionCommand() == "Save"){
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Specify a file to save");
@@ -325,6 +324,19 @@ public class MainWindow extends JFrame implements ActionListener{
                 drawArea.ImageTofile(fileToSave.getAbsolutePath() + ".jpg");
                 MongoDb db = new MongoDb(userEmail);
                 db.uploadimage(fileToSave.getAbsolutePath() + ".jpg", fileToSave.getName());
+            }
+        }else if (e.getActionCommand() == "Save as"){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify a file to save");
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileTode = fileChooser.getSelectedFile();
+                if (fileTode.delete()){
+                    File fileToSave = fileChooser.getSelectedFile();
+                    drawArea.ImageTofile(fileToSave.getAbsolutePath() + ".jpg");
+                    MongoDb db = new MongoDb(userEmail);
+                    db.uploadimage(fileToSave.getAbsolutePath() + ".jpg", fileToSave.getName());
+                }
             }
         }
         else if (e.getActionCommand() == "Open"){
@@ -352,5 +364,6 @@ public class MainWindow extends JFrame implements ActionListener{
                 ioException.printStackTrace();
             }
         }
+
     }
 }
