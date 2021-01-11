@@ -29,17 +29,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0a240e6-5f18-4902-9d08-32f677081cd0" name="Default Changelist" comment="Fix bug when drawing oval">
+      <change afterPath="$PROJECT_DIR$/.idea/GeometryVisualizer.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MongoDb.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/NewWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ResetPassword.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/SignUp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DrawArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DrawArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Oval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Oval.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Rect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Rect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Shape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShapeType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +77,18 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="GeometryVisualizer" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GeometryVisualizer" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GeometryVisualizer" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -116,6 +131,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -138,7 +154,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" value="--scan" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -149,9 +165,7 @@
         </option>
         <option name="vmOptions" value="" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
     <configuration name="GeometryVisualizer [test_MongoDB]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -170,9 +184,7 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
     <list>
@@ -270,5 +282,51 @@
     <MESSAGE value="Add zoom and move around" />
     <MESSAGE value="Fix move features" />
     <option name="LAST_COMMIT_MESSAGE" value="Fix move features" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1609914513523">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1609914513523" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1610213592143">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1610213592143" />
+    <state width="1877" height="197" key="GridCell.Tab.0.bottom" timestamp="1610351515377">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="197" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1610351515377" />
+    <state width="1877" height="197" key="GridCell.Tab.0.center" timestamp="1610351515377">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="197" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1610351515377" />
+    <state width="1877" height="197" key="GridCell.Tab.0.left" timestamp="1610351515377">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="197" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1610351515377" />
+    <state width="1877" height="197" key="GridCell.Tab.0.right" timestamp="1610351515377">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="197" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1610351515377" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1610214035982">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1610214035982" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1610214035982">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1610214035982" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1610214035982">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1610214035982" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1610214035982">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1610214035982" />
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup" timestamp="1610209861360">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1610209861360" />
   </component>
 </project>

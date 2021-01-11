@@ -1,11 +1,17 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class DrawArea extends JPanel {
 
+    private BufferedImage bi;
+    private Image img = null;
     public DrawArea() {
         g2d = null;
         drawShapeType = ShapeType.LINE;
@@ -158,21 +164,34 @@ public class DrawArea extends JPanel {
     private boolean isDrawing;
     private Point curMousePos;
 
+    public void paint( Graphics g )
+    {
+        if (img != null){
+            g2d = (Graphics2D) g;
+            g2d.drawImage(img,0,0,null);
+            img = null;
+        }else{
+            super.paint(g);
+        }
+
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         clear();
-
         if (shouldDrawGrid)
             drawGrid();
 
         doPainting();
+
     }
+
+
 
     private void drawGrid() {
         int w = getWidth();
@@ -211,6 +230,24 @@ public class DrawArea extends JPanel {
         repaint();
 
         g2d.setPaint(paintColor);
+    }
+
+    public void setImage(Image image){
+        img = image;
+        repaint();
+        // Draw the image on to the buffered imag
+    }
+
+    public void ImageTofile(String dst){
+        try {
+            bi = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+            Graphics g = bi.getGraphics();
+            this.printAll(g);
+            ImageIO.write(bi, "jpg", new File(dst));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }

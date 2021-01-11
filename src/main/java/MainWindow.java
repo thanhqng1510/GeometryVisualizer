@@ -1,17 +1,83 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Vector;
 
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ActionListener{
 
-    public MainWindow(Color themeColor) {
+
+    private Vector<String> cloud;
+    public MainWindow(Color themeColor,String userEmail) {
         super("Untitled*");
         // TODO: work-around
-
+        this.userEmail = userEmail;
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
+
+        JMenuBar menuBar= new JMenuBar();
+        //System.setProperty("apple.laf.useScreenMenuBar", "true");
+
+        JMenu file= new JMenu("File");
+        JMenuItem fileNew= new JMenuItem("New");
+        //fileNew.setMnemonic(KeyEvent.VK_N);
+        fileNew.setActionCommand("New");
+        fileNew.addActionListener(this);
+
+        JMenuItem fileOpen= new JMenuItem("Open");
+        fileOpen.setActionCommand("Open");
+        fileOpen.addActionListener(this);
+
+        JMenuItem fileOpenProJect = new JMenuItem("Open Cloud");
+        fileOpenProJect.setActionCommand("OpenCloud");
+        fileOpenProJect.addActionListener(this);
+
+        JMenuItem fileOR= new JMenuItem("Open recent");
+        fileOR.setActionCommand("Open recent");
+        fileOR.addActionListener(this);
+
+        JMenuItem fileSave= new JMenuItem("Save");
+        fileSave.setActionCommand("Save");
+        fileSave.addActionListener(this);
+
+        JMenuItem fileSaveAs= new JMenuItem("Save as");
+        fileSaveAs.setActionCommand("Save as");
+        fileSaveAs.addActionListener(this);
+
+        JMenuItem fileClose= new JMenuItem("Close");
+        fileClose.setActionCommand("Close");
+        fileClose.addActionListener(this);
+
+        JMenu file2 = new JMenu("Open Cloud");
+
+        MongoDb db = new MongoDb(userEmail);
+        cloud = MongoDb.retrieveimage();
+        Vector<JMenuItem> cloudItem = new Vector<>();
+
+        for (int i=0;i<cloud.size();i++){
+            JMenuItem tmp = new JMenuItem(cloud.get(i));
+            tmp.setActionCommand("cloud-" + i);
+            tmp.addActionListener(this);
+            file2.add(tmp);
+        }
+
+        file.add(fileNew);
+        file.add(fileOpen);
+        file.add(fileOpenProJect);
+        file.add(fileOR);
+        file.add(fileSave);
+        file.add(fileSaveAs);
+        file.add(fileClose);
+
+        menuBar.add(file);
+        menuBar.add(file2);
+        setJMenuBar(menuBar);
+
+        container.add(menuBar, BorderLayout.NORTH);
 
         this.themeColor = themeColor;
         this.toolbarColor = Color.decode("#e9e9e9");
@@ -111,6 +177,8 @@ public class MainWindow extends JFrame {
         // Create color choose panel (not button)
         colorChooser = new JColorChooser((Color) drawArea.getPaint());
 
+
+
         // Create toolbar
         toolbar = new JToolBar(JToolBar.HORIZONTAL);
         toolbar.setBackground(toolbarColor);
@@ -119,27 +187,27 @@ public class MainWindow extends JFrame {
 
         selectCursorBtn = new JButton(new ImageIcon("./res/selectCursorBtn.png"));
         selectCursorBtn.setBackground(toolbarColor);
-        selectCursorBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        selectCursorBtn.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         selectCursorBtn.addActionListener(toolbarAdapter);
 
         moveAroundBtn = new JButton(new ImageIcon("./res/moveAroundBtn.png"));
         moveAroundBtn.setBackground(toolbarColor);
-        moveAroundBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        moveAroundBtn.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         moveAroundBtn.addActionListener(toolbarAdapter);
 
         zoomInBtn = new JButton(new ImageIcon("./res/zoomInBtn.png"));
         zoomInBtn.setBackground(toolbarColor);
-        zoomInBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        zoomInBtn.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         zoomInBtn.addActionListener(toolbarAdapter);
 
         zoomOutBtn = new JButton(new ImageIcon("./res/zoomOutBtn.png"));
         zoomOutBtn.setBackground(toolbarColor);
-        zoomOutBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        zoomOutBtn.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         zoomOutBtn.addActionListener(toolbarAdapter);
 
         shapeTypeComboBox = new JComboBox<>(ShapeType.getAllTypes());
         shapeTypeComboBox.setBackground(toolbarColor);
-        shapeTypeComboBox.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        shapeTypeComboBox.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         shapeTypeComboBox.setRenderer(new DefaultListCellRenderer() {
 
                 @Override
@@ -159,17 +227,17 @@ public class MainWindow extends JFrame {
 
         toggleGridBtn = new JButton(new ImageIcon("./res/toggleGridBtn.png"));
         toggleGridBtn.setBackground(toolbarColor);
-        toggleGridBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        toggleGridBtn.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         toggleGridBtn.addActionListener(toolbarAdapter);
 
         changeColorBtn = new JButton("Color", new ImageIcon("./res/changeColorBtn.png"));
         changeColorBtn.setBackground(toolbarColor);
-        changeColorBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        changeColorBtn.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         changeColorBtn.addActionListener(toolbarAdapter);
 
         clearBtn = new JButton("Clear", new ImageIcon("./res/clearBtn.png"));
         clearBtn.setBackground(toolbarColor);
-        clearBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        clearBtn.setBorder(new EmptyBorder(40, componentBorderSize, 0, componentBorderSize));
         clearBtn.addActionListener(toolbarAdapter);
 
         toolbar.add(selectCursorBtn);
@@ -180,6 +248,8 @@ public class MainWindow extends JFrame {
         toolbar.add(toggleGridBtn);
         toolbar.add(changeColorBtn);
         toolbar.add(clearBtn);
+
+
 
         // Add toolbar to the main window
         container.add(toolbar, BorderLayout.NORTH);
@@ -218,6 +288,8 @@ public class MainWindow extends JFrame {
     private final int componentBorderSize;
     private final int normalFontSize;
 
+    private String userEmail = "";
+
     private final JToolBar toolbar;
     private final JButton selectCursorBtn;
     private final JButton moveAroundBtn;
@@ -235,4 +307,50 @@ public class MainWindow extends JFrame {
     private final ActionListener toolbarAdapter;
     private final KeyAdapter keyAdapter;
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println(e.getActionCommand());
+        if (e.getActionCommand() == "Save"){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify a file to save");
+
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                drawArea.ImageTofile(fileToSave.getAbsolutePath() + ".jpg");
+                MongoDb db = new MongoDb(userEmail);
+                db.uploadimage(fileToSave.getAbsolutePath() + ".jpg", fileToSave.getName());
+            }
+        }
+        else if (e.getActionCommand() == "Open"){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify a file to Open");
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                try {
+                    Image ip = ImageIO.read(fileToSave);
+                    drawArea.setImage(ip);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        }
+        else if (e.getActionCommand().contains("cloud")){
+            int index = Integer.parseInt(e.getActionCommand().split("-")[1]);
+            String name = "D:/GV/" + userEmail + "-" + cloud.get(index) +".jpg";
+            File fileToOpen = new File(name);
+            try {
+                Image ip = ImageIO.read(fileToOpen);
+                drawArea.setImage(ip);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+    }
 }
