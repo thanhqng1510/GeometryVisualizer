@@ -72,6 +72,15 @@ public class Line extends Shape {
         end.y = (int) ((end.y - yOrigin) * scaleFactor + yOrigin);
     }
 
+    @Override
+    public boolean contain(int x,int y){
+        double disAB= Math.sqrt((x-start.x)*(x-start.x)+ (y-start.y)*(y-start.y));
+        double disBC= Math.sqrt((end.x-x)*(end.x-x)+ (end.y-y)*(end.y-y));
+        double disAC= Math.sqrt((end.x-start.x)*(end.x-start.x)+ (end.y-start.y)*(end.y-start.y));
+        return Math.abs(disAC-(disAB+disBC))<1;
+    }
+
+
     private final Point start;
     private final Point end;
 

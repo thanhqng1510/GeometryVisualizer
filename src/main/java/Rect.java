@@ -75,6 +75,12 @@ public class Rect extends Shape {
         bottomRight.y = (int) ((bottomRight.y - yOrigin) * scaleFactor + yOrigin);
     }
 
+    @Override
+    public boolean contain(int x,int y){
+        return x>= topLeft.x&& x<= bottomRight.x&& y>= topLeft.y&& y<= bottomRight.y;
+    }
+
+
     private final Point topLeft;
     private final Point bottomRight;
 

@@ -2,9 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 
-public class DrawArea extends JPanel {
+public class DrawArea extends JPanel{
 
     public DrawArea() {
         g2d = null;
@@ -18,8 +20,12 @@ public class DrawArea extends JPanel {
         isDrawing = false;
         curMousePos = null;
         strokeThickness = 3;
+        preData= new ArrayList<>();
+        nextData= new ArrayList<>();
+
 
         setDoubleBuffered(true);
+        preData.add(new ArrayList<Shape>());
 
         addMouseListener(new MouseAdapter() {
 
@@ -43,8 +49,10 @@ public class DrawArea extends JPanel {
                             assert userCurShape != null;
                             userCurShape.startDraw(curMousePos.x, curMousePos.y);
                         }
-                        else
+                        else{
+                            preData.add(new ArrayList<Shape>(data));
                             data.add(userCurShape.endDraw());
+                        }
 
                         isDrawing = !isDrawing;
                         break;
@@ -107,6 +115,17 @@ public class DrawArea extends JPanel {
         clear();
     }
 
+    public void undo(){
+        nextData.add(new ArrayList<Shape>(data));
+        data= preData.get(preData.size()-1);
+        preData.remove(preData.size()-1);
+    }
+
+    public void redo(){
+        data= nextData.get(nextData.size()-1);
+        nextData.remove(nextData.size()-1);
+    }
+
     public void setPaint(Paint paint) {
         paintColor = paint;
         g2d.setPaint(paintColor);
@@ -150,13 +169,16 @@ public class DrawArea extends JPanel {
     private CursorMode cursorMode;
     private boolean shouldDrawGrid;
     private Paint paintColor;
-    private final ArrayList<Shape> data;
+    private ArrayList<Shape> data;
     private final float scaleFactor;
     private final int strokeThickness;
 
     private Shape userCurShape;
     private boolean isDrawing;
     private Point curMousePos;
+
+    private final ArrayList<ArrayList<Shape>> preData;
+    private final ArrayList<ArrayList<Shape>> nextData;
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -212,5 +234,4 @@ public class DrawArea extends JPanel {
 
         g2d.setPaint(paintColor);
     }
-
 }

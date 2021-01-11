@@ -92,6 +92,7 @@ public class Oval extends Shape {
         height *= scaleFactor;
     }
 
+
     private final Point topLeft;
     private int anchorX;
     private int anchorY;

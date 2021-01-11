@@ -45,6 +45,7 @@ public class MainWindow extends JFrame {
                     drawArea.setDrawShapeType(shapeType);
                     drawArea.setCursorMode(CursorMode.DRAW);
                     drawArea.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+
                 }
                 else if (e.getSource() == toggleGridBtn)
                     drawArea.toggleGridView();
@@ -56,6 +57,12 @@ public class MainWindow extends JFrame {
                 }
                 else if (e.getSource() == clearBtn)
                     drawArea.clearScreen();
+
+                else if(e.getSource()==undoButton)
+                    drawArea.undo();
+
+                else if(e.getSource()==redoButton)
+                    drawArea.redo();
             }
 
         };
@@ -172,6 +179,17 @@ public class MainWindow extends JFrame {
         clearBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
         clearBtn.addActionListener(toolbarAdapter);
 
+        undoButton= new JButton("Undo");
+        undoButton.setBackground(toolbarColor);
+        undoButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        undoButton.addActionListener(toolbarAdapter);
+
+        redoButton= new JButton("Redo");
+        redoButton.setBackground(toolbarColor);
+        redoButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        redoButton.addActionListener(toolbarAdapter);
+
+
         toolbar.add(selectCursorBtn);
         toolbar.add(moveAroundBtn);
         toolbar.add(zoomInBtn);
@@ -180,6 +198,8 @@ public class MainWindow extends JFrame {
         toolbar.add(toggleGridBtn);
         toolbar.add(changeColorBtn);
         toolbar.add(clearBtn);
+        toolbar.add(undoButton);
+        toolbar.add(redoButton);
 
         // Add toolbar to the main window
         container.add(toolbar, BorderLayout.NORTH);
@@ -231,6 +251,10 @@ public class MainWindow extends JFrame {
     private final DrawArea drawArea;
     private final JLabel xCoordStatus;
     private final JLabel yCoordStatus;
+
+    private final JButton undoButton;
+    private final JButton redoButton;
+
 
     private final ActionListener toolbarAdapter;
     private final KeyAdapter keyAdapter;

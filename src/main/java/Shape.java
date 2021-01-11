@@ -28,6 +28,10 @@ public abstract class Shape {
 
     public abstract void scale(int xOrigin, int yOrigin, float scaleFactor);
 
+    public abstract boolean contain(int x,int y);
+
+
+    private boolean click;
     private Paint paint;
 
 }
