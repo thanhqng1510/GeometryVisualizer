@@ -8,12 +8,22 @@ public class Ellipse extends Ellipse2D.Double implements MyShape {
         super(topLeftX, topLeftY, width, height);
         anchorX = topLeftX;
         anchorY = topLeftY;
-        this.paint = paint;
+        this.paint = this.blendPaint = paint;
     }
 
     @Override
     public Paint getPaint() {
         return paint;
+    }
+
+    @Override
+    public Paint getBlendPaint() {
+        return blendPaint;
+    }
+
+    @Override
+    public void setBlendPaint(Paint paint) {
+        this.blendPaint = paint;
     }
 
     @Override
@@ -29,7 +39,7 @@ public class Ellipse extends Ellipse2D.Double implements MyShape {
     @Override
     public void draw(Graphics2D g2d) {
         Paint oldPaint = g2d.getPaint();
-        g2d.setPaint(getPaint());
+        g2d.setPaint(blendPaint);
 
         g2d.drawOval((int) x, (int) y, (int) width, (int) height);
 
@@ -74,9 +84,15 @@ public class Ellipse extends Ellipse2D.Double implements MyShape {
         height *= scaleFactor;
     }
 
+    @Override
+    public boolean contain(double x, double y) {
+        return super.contains(x, y);
+    }
+
     private int anchorX;
     private int anchorY;
     private final Paint paint;
+    private Paint blendPaint;
     private boolean selected;
 
 }

@@ -5,6 +5,10 @@ public interface MyShape {
 
     Paint getPaint();
 
+    Paint getBlendPaint();
+
+    void setBlendPaint(Paint paint);
+
     boolean selected();
 
     void setSelected(boolean selected);
@@ -18,5 +22,7 @@ public interface MyShape {
     void translate(double dx, double dy);
 
     void scale(double xOrigin, double yOrigin, double scaleFactor);
+
+    boolean contain(double x, double y);
 
 }

@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 
-public class DrawArea extends JPanel{
+public class DrawArea extends JPanel {
 
     public DrawArea() {
         g2d = null;
@@ -21,8 +21,6 @@ public class DrawArea extends JPanel{
         streamData = new ArrayList<>();
         streamIdx = -1;
 
-        click= new Point();
-
         setDoubleBuffered(true);
 
         addMouseListener(new MouseAdapter() {
@@ -31,21 +29,11 @@ public class DrawArea extends JPanel{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
+                // TODO: handle...
                 switch (cursorMode) {
-                    case SELECT:
-                        // TODO: add more features
-                        click = new Point(curMousePos);
-                        chooseShape();
-                        cancel();
-                        // TODO: handle...
-                        break;
-                    case ZOOM_IN:
-                        zoomIn(5);
-                        break;
-                    case ZOOM_OUT:
-                        zoomOut(5);
-                        zoomOut();
-                        break;
+                    case SELECT -> chooseShape();
+                    case ZOOM_IN -> zoomIn(5);
+                    case ZOOM_OUT -> zoomOut(5);
                 }
             }
 
@@ -120,33 +108,25 @@ public class DrawArea extends JPanel{
         if (streamIdx < streamData.size() - 1) {
             ++streamIdx;
             data = new ArrayList<>(streamData.get(streamIdx));
-        data= nextData.get(nextData.size()-1);
-        nextData.remove(nextData.size()-1);
-    }
-
-    private void chooseShape(){
-        flag=0;
-        for(MyShape s: data)
-        {
-            if(s.contain(click.x, click.y))
-            {
-                s.setSelected(true);
-                flag= 1;
-                s.setPaint(Color.BLUE);
-            }
         }
     }
 
-    private void cancel(){
-        if(flag==0)
-        {
+    private void chooseShape() {
+        boolean flag = false;
+
+        for (MyShape s: data)
+            if(s.contain(mousePos.x, mousePos.y)) {
+                s.setSelected(true);
+                s.setBlendPaint(Color.BLUE);
+                flag = true;
+            }
+
+        if (!flag)
             for(MyShape s : data)
                 if (s.selected()) {
-                    s.setPaint(s.getPaint());
+                    s.setBlendPaint(s.getPaint());
                     s.setSelected(false);
                 }
-
-        }
     }
 
     public void delete() {
@@ -203,9 +183,6 @@ public class DrawArea extends JPanel{
 
     private final ArrayList<ArrayList<MyShape>> streamData;
     private int streamIdx;
-
-    private Point click;
-    private int flag;
 
     @Override
     protected void paintComponent(Graphics g) {

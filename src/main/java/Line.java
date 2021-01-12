@@ -6,13 +6,23 @@ public class Line extends Line2D.Double implements MyShape {
 
     public Line(double xStart, double yStart, double xEnd, double yEnd, Paint paint) {
         super(xStart, yStart, xEnd, yEnd);
-        this.paint = paint;
+        this.paint = this.blendPaint = paint;
         this.selected = false;
     }
 
     @Override
     public Paint getPaint() {
         return paint;
+    }
+
+    @Override
+    public Paint getBlendPaint() {
+        return blendPaint;
+    }
+
+    @Override
+    public void setBlendPaint(Paint paint) {
+        this.blendPaint = paint;
     }
 
     @Override
@@ -28,7 +38,7 @@ public class Line extends Line2D.Double implements MyShape {
     @Override
     public void draw(Graphics2D g2d) {
         Paint oldPaint = g2d.getPaint();
-        g2d.setPaint(getPaint());
+        g2d.setPaint(blendPaint);
 
         g2d.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 
@@ -65,7 +75,13 @@ public class Line extends Line2D.Double implements MyShape {
         y2 = (y2 - yOrigin) * scaleFactor + yOrigin;
     }
 
+    @Override
+    public boolean contain(double x, double y) {
+        return super.contains(x, y);
+    }
+
     private final Paint paint;
+    private Paint blendPaint;
     private boolean selected;
 
 }

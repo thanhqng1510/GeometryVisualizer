@@ -6,13 +6,23 @@ public class Rect extends Rectangle2D.Double implements MyShape {
 
     public Rect(double topLeftX, double topLeftY, double width, double height, Paint paint) {
         super(topLeftX, topLeftY, width, height);
-        this.paint = paint;
+        this.paint = this.blendPaint = paint;
         this.selected = false;
     }
 
     @Override
     public Paint getPaint() {
         return paint;
+    }
+
+    @Override
+    public Paint getBlendPaint() {
+        return blendPaint;
+    }
+
+    @Override
+    public void setBlendPaint(Paint paint) {
+        this.blendPaint = paint;
     }
 
     @Override
@@ -28,7 +38,7 @@ public class Rect extends Rectangle2D.Double implements MyShape {
     @Override
     public void draw(Graphics2D g2d) {
         Paint oldPaint = g2d.getPaint();
-        g2d.setPaint(getPaint());
+        g2d.setPaint(blendPaint);
 
         g2d.drawLine((int) x, (int) y, (int) (x + width), (int) y);
         g2d.drawLine((int) (x + width), (int) y, (int) (x + width), (int) (y + height));
@@ -72,7 +82,13 @@ public class Rect extends Rectangle2D.Double implements MyShape {
         height = botY - y;
     }
 
+    @Override
+    public boolean contain(double x, double y) {
+        return super.contains(x, y);
+    }
+
     private final Paint paint;
+    private Paint blendPaint;
     private boolean selected;
 
 }
