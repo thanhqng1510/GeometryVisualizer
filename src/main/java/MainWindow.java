@@ -1,17 +1,79 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Vector;
 
 
-public class MainWindow extends JFrame {
-
-    public MainWindow(Color themeColor) {
+public class MainWindow extends JFrame implements ActionListener{
+    private String userEmail;
+    private Vector<String> cloud;
+    public MainWindow(Color themeColor,String userEmail) {
         super("Untitled*");
+        this.userEmail = userEmail;
         // TODO: work-around
 
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
+
+        JMenuBar menuBar= new JMenuBar();
+        //System.setProperty("apple.laf.useScreenMenuBar", "true");
+
+        JMenu file= new JMenu("File");
+        JMenuItem fileNew= new JMenuItem("New");
+        //fileNew.setMnemonic(KeyEvent.VK_N);
+        fileNew.setActionCommand("New");
+        fileNew.addActionListener(this);
+
+        JMenuItem fileOpen= new JMenuItem("Open");
+        fileOpen.setActionCommand("Open");
+        fileOpen.addActionListener(this);
+
+        JMenuItem fileOpenProJect = new JMenuItem("Open Cloud");
+        fileOpenProJect.setActionCommand("OpenCloud");
+        fileOpenProJect.addActionListener(this);
+
+        JMenuItem fileSave= new JMenuItem("Save");
+        fileSave.setActionCommand("Save");
+        fileSave.addActionListener(this);
+
+        JMenuItem fileSaveAs= new JMenuItem("Save as");
+        fileSaveAs.setActionCommand("Save as");
+        fileSaveAs.addActionListener(this);
+
+        JMenuItem fileClose= new JMenuItem("Close");
+        fileClose.setActionCommand("Close");
+        fileClose.addActionListener(this);
+
+        JMenu file2 = new JMenu("Open Cloud");
+
+        MongoDb db = new MongoDb(userEmail);
+        cloud = MongoDb.retrieveimage();
+
+        Vector<JMenuItem> cloudItem = new Vector<>();
+
+        for (int i=0;i<cloud.size();i++){
+            JMenuItem tmp = new JMenuItem(cloud.get(i));
+            tmp.setActionCommand("cloud-" + i);
+            tmp.addActionListener(this);
+            file2.add(tmp);
+        }
+
+        file.add(fileNew);
+        file.add(fileOpen);
+        file.add(fileOpenProJect);
+        file.add(fileSave);
+        file.add(fileSaveAs);
+        file.add(fileClose);
+
+        menuBar.add(file);
+        menuBar.add(file2);
+        setJMenuBar(menuBar);
+
+        container.add(menuBar, BorderLayout.NORTH);
 
         this.themeColor = themeColor;
         this.toolbarColor = Color.decode("#e9e9e9");
@@ -257,4 +319,64 @@ public class MainWindow extends JFrame {
     private final ActionListener toolbarAdapter;
     private final KeyAdapter keyAdapter;
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand() == "New"){
+            drawArea.clearScreen();
+        }else if (e.getActionCommand() == "Close"){
+            System.exit(0);
+        }else
+        if (e.getActionCommand() == "Save"){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify a file to save");
+
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                drawArea.ImageTofile(fileToSave.getAbsolutePath() + ".jpg");
+                MongoDb db = new MongoDb(userEmail);
+                db.uploadimage(fileToSave.getAbsolutePath() + ".jpg", fileToSave.getName());
+            }
+        }else if (e.getActionCommand() == "Save as"){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify a file to save");
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileTode = fileChooser.getSelectedFile();
+                if (fileTode.delete()){
+                    File fileToSave = fileChooser.getSelectedFile();
+                    drawArea.ImageTofile(fileToSave.getAbsolutePath() + ".jpg");
+                    MongoDb db = new MongoDb(userEmail);
+                    db.uploadimage(fileToSave.getAbsolutePath() + ".jpg", fileToSave.getName());
+                }
+            }
+        }
+        else if (e.getActionCommand() == "Open"){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify a file to Open");
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                System.out.println(fileToSave);
+                try {
+                    Image ip = ImageIO.read(fileToSave);
+                    drawArea.setImage(ip);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        }
+        else if (e.getActionCommand().contains("cloud")) {
+            int index = Integer.parseInt(e.getActionCommand().split("-")[1]);
+            String name = "C:/Users/hoang/GV/" + this.userEmail + "-" + cloud.get(index) + ".jpg";
+            File fileToOpen = new File(name);
+            System.out.println(name);
+            try {
+                Image ip = ImageIO.read(fileToOpen);
+                drawArea.setImage(ip);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+    }
 }

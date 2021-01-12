@@ -1,9 +1,16 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
+public class DrawArea extends JPanel{
+    private BufferedImage bi;
+    private Image img = null;
 public class DrawArea extends JPanel {
 
     public DrawArea() {
@@ -199,6 +206,18 @@ public class DrawArea extends JPanel {
         doPainting();
     }
 
+    public void paint( Graphics g )
+    {
+        if (img != null){
+            g2d = (Graphics2D) g;
+            g2d.drawImage(img,0,0,null);
+            img = null;
+        }else{
+            super.paint(g);
+        }
+
+    }
+
     private void drawGrid() {
         int w = getWidth();
         int h = getHeight();
@@ -234,5 +253,23 @@ public class DrawArea extends JPanel {
         repaint();
 
         g2d.setPaint(paintColor);
+    }
+
+    public void setImage(Image image){
+        img = image;
+        repaint();
+        // Draw the image on to the buffered imag
+    }
+
+    public void ImageTofile(String dst){
+        try {
+            bi = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+            Graphics g = bi.getGraphics();
+            this.printAll(g);
+            ImageIO.write(bi, "jpg", new File(dst));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
