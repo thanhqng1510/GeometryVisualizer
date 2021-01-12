@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class DrawArea extends JPanel{
+public class DrawArea extends JPanel {
     private BufferedImage bi;
     private Image img = null;
 
