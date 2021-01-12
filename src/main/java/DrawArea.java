@@ -192,6 +192,18 @@ public class DrawArea extends JPanel{
         doPainting();
     }
 
+    public void paint( Graphics g )
+    {
+        if (img != null){
+            g2d = (Graphics2D) g;
+            g2d.drawImage(img,0,0,null);
+            img = null;
+        }else{
+            super.paint(g);
+        }
+
+    }
+
     private void drawGrid() {
         int w = getWidth();
         int h = getHeight();

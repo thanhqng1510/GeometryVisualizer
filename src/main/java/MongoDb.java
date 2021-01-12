@@ -127,7 +127,7 @@ class MongoDb {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        mongoClient.close();
+
     }
 
     public static Vector<String> retrieveimage(){
@@ -143,16 +143,14 @@ class MongoDb {
                     GridFSFile gridFSFile = gridBucket.find(Filters.eq("_id",ar11.get(i))).first();
                     //File myObj = new File("D:/GV/" + emailUser + "/" + gridFSFile.getFilename() +".jpg");
                     rs.add(gridFSFile.getFilename());
-                    FileOutputStream fileOutputStream = new FileOutputStream("D:/GV/" + emailUser + "-" + gridFSFile.getFilename() +".jpg");
+                    FileOutputStream fileOutputStream = new FileOutputStream("C:/Users/hoang/GV/" + emailUser + "-" + gridFSFile.getFilename() +".jpg");
                     gridBucket.downloadToStream(gridFSFile.getId(), fileOutputStream);
-                    fileOutputStream.close();
+
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-            mongoClient.close();
+
         }
         return rs;
     }
@@ -163,6 +161,5 @@ class MongoDb {
 
     public MongoDb(String email){
         this.emailUser = email;
-
     }
 }

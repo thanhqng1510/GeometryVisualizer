@@ -13,7 +13,7 @@ public class MainWindow extends JFrame implements ActionListener{
     private Vector<String> cloud;
     public MainWindow(Color themeColor,String userEmail) {
         super("Untitled*");
-        userEmail = userEmail;
+        this.userEmail = userEmail;
         // TODO: work-around
 
         Container container = getContentPane();
@@ -52,6 +52,7 @@ public class MainWindow extends JFrame implements ActionListener{
 
         MongoDb db = new MongoDb(userEmail);
         cloud = MongoDb.retrieveimage();
+
         Vector<JMenuItem> cloudItem = new Vector<>();
 
         for (int i=0;i<cloud.size();i++){
@@ -356,6 +357,7 @@ public class MainWindow extends JFrame implements ActionListener{
             int userSelection = fileChooser.showSaveDialog(this);
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 File fileToSave = fileChooser.getSelectedFile();
+                System.out.println(fileToSave);
                 try {
                     Image ip = ImageIO.read(fileToSave);
                     drawArea.setImage(ip);
@@ -366,8 +368,9 @@ public class MainWindow extends JFrame implements ActionListener{
         }
         else if (e.getActionCommand().contains("cloud")) {
             int index = Integer.parseInt(e.getActionCommand().split("-")[1]);
-            String name = "D:/GV/" + userEmail + "-" + cloud.get(index) + ".jpg";
+            String name = "C:/Users/hoang/GV/" + this.userEmail + "-" + cloud.get(index) + ".jpg";
             File fileToOpen = new File(name);
+            System.out.println(name);
             try {
                 Image ip = ImageIO.read(fileToOpen);
                 drawArea.setImage(ip);
