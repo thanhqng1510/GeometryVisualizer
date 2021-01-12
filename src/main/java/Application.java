@@ -15,11 +15,7 @@ public class Application {
     }
 
     public void start() {
-        MainWindow main_window = new MainWindow(themeColor);
-    }
-
-    public void exit() {
-
+        new MainWindow(themeColor);
     }
 
     public static void main(String[] args) {

@@ -1,13 +1,14 @@
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.Ellipse2D;
 
 
-public class Rect extends Rectangle2D.Double implements MyShape {
+public class Ellipse extends Ellipse2D.Double implements MyShape {
 
-    public Rect(double topLeftX, double topLeftY, double width, double height, Paint paint) {
+    public Ellipse(int topLeftX, int topLeftY, int width, int height, Paint paint) {
         super(topLeftX, topLeftY, width, height);
+        anchorX = topLeftX;
+        anchorY = topLeftY;
         this.paint = paint;
-        this.selected = false;
     }
 
     @Override
@@ -30,10 +31,7 @@ public class Rect extends Rectangle2D.Double implements MyShape {
         Paint oldPaint = g2d.getPaint();
         g2d.setPaint(getPaint());
 
-        g2d.drawLine((int) x, (int) y, (int) (x + width), (int) y);
-        g2d.drawLine((int) (x + width), (int) y, (int) (x + width), (int) (y + height));
-        g2d.drawLine((int) (x + width), (int) (y + height), (int) x, (int) (y + height));
-        g2d.drawLine((int) x, (int) (y + height), (int) x, (int) y);
+        g2d.drawOval((int) x, (int) y, (int) width, (int) height);
 
         g2d.setPaint(oldPaint);
     }
@@ -42,14 +40,19 @@ public class Rect extends Rectangle2D.Double implements MyShape {
     public void begin(double x, double y) {
         this.x = x;
         this.y = y;
-        width = 0;
-        height = 0;
+        anchorX = (int) x;
+        anchorY = (int) y;
+        width = 1;
+        height = 1;
     }
 
     @Override
     public void update(double x, double y) {
-        width = x - this.x;
-        height = y - this.y;
+        x = Math.min(x, anchorX);
+        y = Math.min(y, anchorY);
+
+        width = Math.abs(x - anchorX) + 1;
+        height = Math.abs(y - anchorY) + 1;
     }
 
     @Override
@@ -61,21 +64,23 @@ public class Rect extends Rectangle2D.Double implements MyShape {
     public void translate(double dx, double dy) {
         x += dx;
         y += dy;
+        anchorX = (int) x;
+        anchorY = (int) y;
     }
 
     @Override
     public void scale(double xOrigin, double yOrigin, double scaleFactor) {
-        x = (x - xOrigin) * scaleFactor + xOrigin;
-        y = (y - yOrigin) * scaleFactor + yOrigin;
+        x = (int) ((x - xOrigin) * scaleFactor + xOrigin);
+        y = (int) ((y - yOrigin) * scaleFactor + yOrigin);
 
-        double botX = x + width, botY = y + height;
-        botX = (botX - xOrigin) * scaleFactor + xOrigin;
-        botY = (botY - yOrigin) * scaleFactor + yOrigin;
-
-        width = botX - x;
-        height = botY - y;
+        anchorX = (int) x;
+        anchorY = (int) y;
+        width *= scaleFactor;
+        height *= scaleFactor;
     }
 
+    private int anchorX;
+    private int anchorY;
     private final Paint paint;
     private boolean selected;
 

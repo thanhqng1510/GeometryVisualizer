@@ -1,87 +1,76 @@
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 
-public class Line extends Shape {
+public class Line extends Line2D.Double implements MyShape {
 
-    public Line(int xStart, int yStart, int xEnd, int yEnd, Paint paint) {
-        super(paint);
-        start = new Point(xStart, yStart);
-        end = new Point(xEnd, yEnd);
-    }
-
-    public Point getStart() {
-        return start;
-    }
-
-    public void setStart(int x, int y) {
-        start.x = x;
-        start.y = y;
-    }
-
-    public Point getEnd() {
-        return end;
-    }
-
-    public void setEnd(int x, int y) {
-        end.x = x;
-        end.y = y;
+    public Line(double xStart, double yStart, double xEnd, double yEnd, Paint paint) {
+        super(xStart, yStart, xEnd, yEnd);
+        this.paint = paint;
+        this.selected = false;
     }
 
     @Override
-    public void drawOn(Graphics2D g2d) {
+    public Paint getPaint() {
+        return paint;
+    }
+
+    @Override
+    public boolean selected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public void draw(Graphics2D g2d) {
         Paint oldPaint = g2d.getPaint();
         g2d.setPaint(getPaint());
 
-        g2d.drawLine(start.x, start.y, end.x, end.y);
+        g2d.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 
         g2d.setPaint(oldPaint);
     }
 
     @Override
-    public void startDraw(int x, int y) {
-        start.x = x;
-        start.y = y;
-
-        end.x = x;
-        end.y = y;
+    public void begin(double x, double y) {
+        x1 = x2 = x;
+        y1 = y2 = y;
     }
 
     @Override
-    public void onDraw(int x, int y) {
-        end.x = x;
-        end.y = y;
+    public void update(double x, double y) {
+        x2 = x;
+        y2 = y;
     }
 
     @Override
-    public Shape endDraw() {
+    public MyShape end() {
         return this;
     }
 
     @Override
-    public void translate(int dx, int dy) {
-        start.translate(dx, dy);
-        end.translate(dx, dy);
+    public void translate(double dx, double dy) {
+        x1 += dx;
+        y1 += dy;
+
+        x2 += dx;
+        y2 += dy;
     }
 
     @Override
-    public void scale(int xOrigin, int yOrigin, float scaleFactor) {
-        start.x = (int) ((start.x - xOrigin) * scaleFactor + xOrigin);
-        start.y = (int) ((start.y - yOrigin) * scaleFactor + yOrigin);
+    public void scale(double xOrigin, double yOrigin, double scaleFactor) {
+        x1 = (x1 - xOrigin) * scaleFactor + xOrigin;
+        y1 = (y1 - yOrigin) * scaleFactor + yOrigin;
 
-        end.x = (int) ((end.x - xOrigin) * scaleFactor + xOrigin);
-        end.y = (int) ((end.y - yOrigin) * scaleFactor + yOrigin);
+        x2 = (x2 - xOrigin) * scaleFactor + xOrigin;
+        y2 = (y2 - yOrigin) * scaleFactor + yOrigin;
     }
 
-    @Override
-    public boolean contain(int x,int y){
-        double disAB= Math.sqrt((x-start.x)*(x-start.x)+ (y-start.y)*(y-start.y));
-        double disBC= Math.sqrt((end.x-x)*(end.x-x)+ (end.y-y)*(end.y-y));
-        double disAC= Math.sqrt((end.x-start.x)*(end.x-start.x)+ (end.y-start.y)*(end.y-start.y));
-        return Math.abs(disAC-(disAB+disBC))<1;
-    }
-
-
-    private final Point start;
-    private final Point end;
+    private final Paint paint;
+    private boolean selected;
 
 }

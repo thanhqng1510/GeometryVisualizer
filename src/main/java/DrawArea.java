@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 
 public class DrawArea extends JPanel{
@@ -18,25 +16,66 @@ public class DrawArea extends JPanel{
         scaleFactor = .025f;
         userCurShape = null;
         isDrawing = false;
-        curMousePos = null;
+        mousePos = null;
         strokeThickness = 3;
-        preData= new ArrayList<>();
-        nextData= new ArrayList<>();
-        click= new Point();
-
+        streamData = new ArrayList<>();
+        streamIdx = -1;
 
         setDoubleBuffered(true);
-        preData.add(new ArrayList<Shape>());
 
         addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
 
                 switch (cursorMode) {
                     case SELECT:
                         // TODO: add more features
+                        break;
+                    case ZOOM_IN:
+                        zoomIn();
+                        streamData.subList(streamIdx + 1, streamData.size()).clear();
+                        streamData.add(new ArrayList<>(data));
+                        ++streamIdx;
+                        break;
+                    case ZOOM_OUT:
+                        zoomOut();
+                        streamData.subList(streamIdx + 1, streamData.size()).clear();
+                        streamData.add(new ArrayList<>(data));
+                        ++streamIdx;
+                        break;
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+
+                if (cursorMode == CursorMode.DRAW) {
+                    data.add(userCurShape.end());
+                    isDrawing = false;
+                }
+
+                streamData.subList(streamIdx + 1, streamData.size()).clear();
+                streamData.add(new ArrayList<>(data));
+                ++streamIdx;
+
+            }
+
+        });
+        addMouseMotionListener(new MouseMotionAdapter() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+
+                Point oldMousePos = mousePos;
+                mousePos = new Point(e.getX(), e.getY());
+
+                switch (cursorMode) {
+                    case MOVE:
+                        for (MyShape s : data) s.translate(mousePos.x - oldMousePos.x, mousePos.y - oldMousePos.y);
                         break;
                     case ZOOM_IN:
                         zoomIn();
@@ -46,73 +85,18 @@ public class DrawArea extends JPanel{
                         break;
                     case DRAW:
                         if (!isDrawing) {
-                            userCurShape = drawShapeType.getInstance(paintColor);
+                            userCurShape = drawShapeType.genInstance(paintColor);
                             assert userCurShape != null;
-                            userCurShape.startDraw(curMousePos.x, curMousePos.y);
+                            userCurShape.begin(mousePos.x, mousePos.y);
+                            isDrawing = true;
                         }
-                        else{
-                            preData.add(new ArrayList<Shape>(data));
-                            data.add(userCurShape.endDraw());
-                        }
-
-                        isDrawing = !isDrawing;
-                        break;
-                    case CHOOSE:
-                        click= new Point(curMousePos);
-                        break;
-
-                }
-            }
-
-        });
-        addMouseMotionListener(new MouseMotionAdapter() {
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                super.mouseMoved(e);
-
-                curMousePos = new Point(e.getX(), e.getY());
-
-                switch (cursorMode) {
-                    case SELECT:
-                        // TODO: add more features
-                        break;
-                    case DRAW:
-                        if (isDrawing)
-                            userCurShape.onDraw(curMousePos.x, curMousePos.y);
-                        break;
-                }
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                super.mouseDragged(e);
-
-                Point oldMousePos = curMousePos;
-                curMousePos = new Point(e.getX(), e.getY());
-
-                switch (cursorMode) {
-                    case SELECT:
-                        // TODO: add more features
-                        break;
-                    case MOVE_AROUND:
-                        for (Shape s : data)
-                            s.translate(curMousePos.x - oldMousePos.x, curMousePos.y - oldMousePos.y);
-                        break;
-                    case ZOOM_IN:
-                        zoomIn();
-                        break;
-                    case ZOOM_OUT:
-                        zoomOut();
-                        break;
-                    case DRAW:
-                        if (isDrawing)
-                            userCurShape.onDraw(curMousePos.x, curMousePos.y);
+                        else userCurShape.update(mousePos.x, mousePos.y);
                         break;
                 }
             }
 
         });
+
     }
 
     public void clearScreen() {
@@ -121,29 +105,23 @@ public class DrawArea extends JPanel{
     }
 
     public void undo(){
-        nextData.add(new ArrayList<Shape>(data));
-        data= preData.get(preData.size()-1);
-        preData.remove(preData.size()-1);
+        if (streamIdx >= 0) {
+            --streamIdx;
+
+            if (streamIdx >= 0) data = new ArrayList<>(streamData.get(streamIdx));
+            else data = new ArrayList<>();
+        }
     }
 
     public void redo(){
-        data= nextData.get(nextData.size()-1);
-        nextData.remove(nextData.size()-1);
-    }
-
-    private ArrayList<Shape> chooseShape(){
-        ArrayList<Shape> a= new ArrayList<Shape>();
-        for(Shape s: data)
-        {
-            if(s.contain(click.x, click.y))
-                a.add(s);
+        if (streamIdx < streamData.size() - 1) {
+            ++streamIdx;
+            data = new ArrayList<>(streamData.get(streamIdx));
         }
-        return a;
     }
 
-    public void delete(){
-        for(Shape s: chooseShape())
-            data.remove(s);
+    public void delete() {
+        data.removeIf(MyShape::selected);
     }
 
     public void setPaint(Paint paint) {
@@ -160,8 +138,7 @@ public class DrawArea extends JPanel{
     }
 
     public void setCursorMode(CursorMode cursorMode) {
-        if (cursorMode != CursorMode.DRAW)
-            stopDrawing();
+        if (cursorMode != CursorMode.DRAW) stopDrawing();
         this.cursorMode = cursorMode;
     }
 
@@ -175,13 +152,11 @@ public class DrawArea extends JPanel{
     }
 
     public void zoomIn() {
-        for (Shape s : data)
-            s.scale(curMousePos.x, curMousePos.y, 1 + scaleFactor);
+        for (MyShape s : data) s.scale(mousePos.x, mousePos.y, 1 + scaleFactor);
     }
 
     public void zoomOut() {
-        for (Shape s : data)
-            s.scale(curMousePos.x, curMousePos.y, 1 - scaleFactor);
+        for (MyShape s : data) s.scale(mousePos.x, mousePos.y, 1 - scaleFactor);
     }
 
     private Graphics2D g2d;
@@ -189,17 +164,16 @@ public class DrawArea extends JPanel{
     private CursorMode cursorMode;
     private boolean shouldDrawGrid;
     private Paint paintColor;
-    private ArrayList<Shape> data;
+    private ArrayList<MyShape> data;
     private final float scaleFactor;
     private final int strokeThickness;
+    private Point mousePos;
 
-    private Shape userCurShape;
+    private MyShape userCurShape;
     private boolean isDrawing;
-    private Point curMousePos;
 
-    private final ArrayList<ArrayList<Shape>> preData;
-    private final ArrayList<ArrayList<Shape>> nextData;
-    private Point click;
+    private final ArrayList<ArrayList<MyShape>> streamData;
+    private int streamIdx;
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -211,8 +185,7 @@ public class DrawArea extends JPanel{
 
         clear();
 
-        if (shouldDrawGrid)
-            drawGrid();
+        if (shouldDrawGrid) drawGrid();
 
         doPainting();
     }
@@ -225,11 +198,11 @@ public class DrawArea extends JPanel{
 
         g2d.setPaint(Color.decode("#bababa"));
 
-        int rowHeight = h / rows;
+        int rowHeight = h / (rows != 0 ? rows : 1);
         for (int i = 0; i < rows + 1; ++i)
             g2d.drawLine(0, i * rowHeight, w, i * rowHeight);
 
-        int colWidth = w / cols;
+        int colWidth = w / (cols != 0 ? cols : 1);
         for (int i = 0; i < cols + 1; ++i)
             g2d.drawLine(i * colWidth, 0, i * colWidth, h);
 
@@ -239,11 +212,9 @@ public class DrawArea extends JPanel{
     private void doPainting() {
         g2d.setStroke(new BasicStroke(strokeThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
 
-        if (isDrawing)
-            userCurShape.drawOn(g2d);
+        if (isDrawing) userCurShape.draw(g2d);
 
-        for (Shape s : data)
-            s.drawOn(g2d);
+        for (MyShape s : data) s.draw(g2d);
 
         g2d.setStroke(new BasicStroke());
     }

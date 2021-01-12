@@ -22,12 +22,12 @@ public class MainWindow extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == selectCursorBtn) {
+                if (e.getSource() == selectBtn) {
                     drawArea.setCursorMode(CursorMode.SELECT);
                     drawArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
-                else if (e.getSource() == moveAroundBtn) {
-                    drawArea.setCursorMode(CursorMode.MOVE_AROUND);
+                else if (e.getSource() == moveBtn) {
+                    drawArea.setCursorMode(CursorMode.MOVE);
                     drawArea.setCursor(new Cursor(Cursor.MOVE_CURSOR));
                 }
                 else if (e.getSource() == zoomInBtn) {
@@ -47,31 +47,17 @@ public class MainWindow extends JFrame {
                     drawArea.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 
                 }
-                else if (e.getSource() == toggleGridBtn)
-                    drawArea.toggleGridView();
+                else if (e.getSource() == toggleGridBtn) drawArea.toggleGridView();
                 else if (e.getSource() == changeColorBtn) {
                     JDialog dialog = JColorChooser.createDialog(
                             drawArea, "Choose color", false, colorChooser,
                             e1 -> drawArea.setPaint(colorChooser.getColor()), null);
                     dialog.setVisible(true);
                 }
-                else if (e.getSource() == clearBtn)
-                    drawArea.clearScreen();
-
-                else if(e.getSource()==undoButton)
-                    drawArea.undo();
-
-                else if(e.getSource()==redoButton)
-                    drawArea.redo();
-
-                else if(e.getSource()==clickButton)
-                {
-                    drawArea.setCursorMode(CursorMode.CHOOSE);
-                    drawArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                }
-
-                else if(e.getSource()==deleteButton)
-                    drawArea.delete();
+                else if (e.getSource() == clearBtn) drawArea.clearScreen();
+                else if(e.getSource() == undoBtn) drawArea.undo();
+                else if(e.getSource() == redoBtn) drawArea.redo();
+                else if(e.getSource() == deleteBtn) drawArea.delete();
             }
 
         };
@@ -90,37 +76,35 @@ public class MainWindow extends JFrame {
 
         // Add draw area to the main window
         drawArea = new DrawArea();
+        drawArea.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if (!hasFocus()) requestFocus();
+            }
+
+        });
         drawArea.addMouseMotionListener(new MouseMotionAdapter() {
 
             @Override
             public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
                 xCoordStatus.setText("<html><b>X: " + e.getX() + "</b></html>");
                 yCoordStatus.setText("<html><b>Y: " + e.getY() + "</b></html>");
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
                 xCoordStatus.setText("<html><b>X: " + e.getX() + "</b></html>");
                 yCoordStatus.setText("<html><b>Y: " + e.getY() + "</b></html>");
             }
 
         });
-        drawArea.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-
-                if (!hasFocus())
-                    requestFocus();
-            }
-
-        });
         drawArea.addMouseWheelListener(e -> {
-            if (e.getWheelRotation() < 0)
-                drawArea.zoomIn();
-            else
-                drawArea.zoomOut();
+            if (e.getWheelRotation() < 0) drawArea.zoomIn();
+            else drawArea.zoomOut();
         });
         container.add(drawArea, BorderLayout.CENTER);
 
@@ -133,15 +117,15 @@ public class MainWindow extends JFrame {
         toolbar.setRequestFocusEnabled(false);
         toolbar.setBorder(new EmptyBorder(componentBorderSize, componentBorderSize, componentBorderSize, componentBorderSize));
 
-        selectCursorBtn = new JButton(new ImageIcon("./res/selectCursorBtn.png"));
-        selectCursorBtn.setBackground(toolbarColor);
-        selectCursorBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
-        selectCursorBtn.addActionListener(toolbarAdapter);
+        selectBtn = new JButton(new ImageIcon("./res/selectCursorBtn.png"));
+        selectBtn.setBackground(toolbarColor);
+        selectBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        selectBtn.addActionListener(toolbarAdapter);
 
-        moveAroundBtn = new JButton(new ImageIcon("./res/moveAroundBtn.png"));
-        moveAroundBtn.setBackground(toolbarColor);
-        moveAroundBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
-        moveAroundBtn.addActionListener(toolbarAdapter);
+        moveBtn = new JButton(new ImageIcon("./res/moveAroundBtn.png"));
+        moveBtn.setBackground(toolbarColor);
+        moveBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        moveBtn.addActionListener(toolbarAdapter);
 
         zoomInBtn = new JButton(new ImageIcon("./res/zoomInBtn.png"));
         zoomInBtn.setBackground(toolbarColor);
@@ -188,39 +172,32 @@ public class MainWindow extends JFrame {
         clearBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
         clearBtn.addActionListener(toolbarAdapter);
 
-        undoButton= new JButton("Undo");
-        undoButton.setBackground(toolbarColor);
-        undoButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
-        undoButton.addActionListener(toolbarAdapter);
+        undoBtn = new JButton("Undo");
+        undoBtn.setBackground(toolbarColor);
+        undoBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        undoBtn.addActionListener(toolbarAdapter);
 
-        redoButton= new JButton("Redo");
-        redoButton.setBackground(toolbarColor);
-        redoButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
-        redoButton.addActionListener(toolbarAdapter);
+        redoBtn = new JButton("Redo");
+        redoBtn.setBackground(toolbarColor);
+        redoBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        redoBtn.addActionListener(toolbarAdapter);
 
-        clickButton= new JButton("ClickShape");
-        clickButton.setBackground(toolbarColor);
-        clickButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
-        clickButton.addActionListener(toolbarAdapter);
+        deleteBtn= new JButton("Delete");
+        deleteBtn.setBackground(toolbarColor);
+        deleteBtn.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
+        deleteBtn.addActionListener(toolbarAdapter);
 
-        deleteButton= new JButton("Delete");
-        deleteButton.setBackground(toolbarColor);
-        deleteButton.setBorder(new EmptyBorder(0, componentBorderSize, 0, componentBorderSize));
-        deleteButton.addActionListener(toolbarAdapter);
-
-
-        toolbar.add(selectCursorBtn);
-        toolbar.add(moveAroundBtn);
+        toolbar.add(selectBtn);
+        toolbar.add(moveBtn);
         toolbar.add(zoomInBtn);
         toolbar.add(zoomOutBtn);
         toolbar.add(shapeTypeComboBox);
         toolbar.add(toggleGridBtn);
         toolbar.add(changeColorBtn);
         toolbar.add(clearBtn);
-        toolbar.add(undoButton);
-        toolbar.add(redoButton);
-        toolbar.add(clickButton);
-        toolbar.add(deleteButton);
+        toolbar.add(undoBtn);
+        toolbar.add(redoBtn);
+        toolbar.add(deleteBtn);
 
         // Add toolbar to the main window
         container.add(toolbar, BorderLayout.NORTH);
@@ -260,8 +237,8 @@ public class MainWindow extends JFrame {
     private final int normalFontSize;
 
     private final JToolBar toolbar;
-    private final JButton selectCursorBtn;
-    private final JButton moveAroundBtn;
+    private final JButton selectBtn;
+    private final JButton moveBtn;
     private final JButton zoomInBtn;
     private final JButton zoomOutBtn;
     private final JComboBox<ShapeType> shapeTypeComboBox;
@@ -273,11 +250,9 @@ public class MainWindow extends JFrame {
     private final JLabel xCoordStatus;
     private final JLabel yCoordStatus;
 
-    private final JButton undoButton;
-    private final JButton redoButton;
-    private final JButton clickButton;
-    private final JButton deleteButton;
-
+    private final JButton undoBtn;
+    private final JButton redoBtn;
+    private final JButton deleteBtn;
 
     private final ActionListener toolbarAdapter;
     private final KeyAdapter keyAdapter;
