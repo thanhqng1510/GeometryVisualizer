@@ -48,16 +48,11 @@ public class Ellipse extends Ellipse2D.Double implements MyShape {
 
     @Override
     public void update(double x, double y) {
-        x = Math.min(x, anchorX);
-        y = Math.min(y, anchorY);
+        this.x = Math.min(x, anchorX);
+        this.y = Math.min(y, anchorY);
 
         width = Math.abs(x - anchorX) + 1;
         height = Math.abs(y - anchorY) + 1;
-    }
-
-    @Override
-    public MyShape end() {
-        return this;
     }
 
     @Override

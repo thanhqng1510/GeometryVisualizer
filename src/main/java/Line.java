@@ -48,11 +48,6 @@ public class Line extends Line2D.Double implements MyShape {
     }
 
     @Override
-    public MyShape end() {
-        return this;
-    }
-
-    @Override
     public void translate(double dx, double dy) {
         x1 += dx;
         y1 += dy;

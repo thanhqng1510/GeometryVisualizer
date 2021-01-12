@@ -34,13 +34,13 @@ public class DrawArea extends JPanel{
                         // TODO: add more features
                         break;
                     case ZOOM_IN:
-                        zoomIn();
+                        zoomIn(1);
                         streamData.subList(streamIdx + 1, streamData.size()).clear();
                         streamData.add(new ArrayList<>(data));
                         ++streamIdx;
                         break;
                     case ZOOM_OUT:
-                        zoomOut();
+                        zoomOut(1);
                         streamData.subList(streamIdx + 1, streamData.size()).clear();
                         streamData.add(new ArrayList<>(data));
                         ++streamIdx;
@@ -53,7 +53,7 @@ public class DrawArea extends JPanel{
                 super.mouseReleased(e);
 
                 if (cursorMode == CursorMode.DRAW) {
-                    data.add(userCurShape.end());
+                    data.add(userCurShape);
                     isDrawing = false;
                 }
 
@@ -67,10 +67,16 @@ public class DrawArea extends JPanel{
         addMouseMotionListener(new MouseMotionAdapter() {
 
             @Override
+            public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
+                mousePos = new Point(e.getX(), e.getY());
+            }
+
+            @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
-                Point oldMousePos = mousePos;
+                Point oldMousePos = new Point(mousePos);
                 mousePos = new Point(e.getX(), e.getY());
 
                 switch (cursorMode) {
@@ -78,15 +84,14 @@ public class DrawArea extends JPanel{
                         for (MyShape s : data) s.translate(mousePos.x - oldMousePos.x, mousePos.y - oldMousePos.y);
                         break;
                     case ZOOM_IN:
-                        zoomIn();
+                        zoomIn(3);
                         break;
                     case ZOOM_OUT:
-                        zoomOut();
+                        zoomOut(3);
                         break;
                     case DRAW:
                         if (!isDrawing) {
                             userCurShape = drawShapeType.genInstance(paintColor);
-                            assert userCurShape != null;
                             userCurShape.begin(mousePos.x, mousePos.y);
                             isDrawing = true;
                         }
@@ -151,12 +156,12 @@ public class DrawArea extends JPanel{
         shouldDrawGrid = !shouldDrawGrid;
     }
 
-    public void zoomIn() {
-        for (MyShape s : data) s.scale(mousePos.x, mousePos.y, 1 + scaleFactor);
+    public void zoomIn(double mul) {
+        for (MyShape s : data) s.scale(mousePos.x, mousePos.y, 1 + scaleFactor * mul);
     }
 
-    public void zoomOut() {
-        for (MyShape s : data) s.scale(mousePos.x, mousePos.y, 1 - scaleFactor);
+    public void zoomOut(double mul) {
+        for (MyShape s : data) s.scale(mousePos.x, mousePos.y, 1 - scaleFactor * mul);
     }
 
     private Graphics2D g2d;

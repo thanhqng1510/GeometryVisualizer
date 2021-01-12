@@ -15,8 +15,6 @@ public interface MyShape {
 
     void update(double x, double y);
 
-    MyShape end();
-
     void translate(double dx, double dy);
 
     void scale(double xOrigin, double yOrigin, double scaleFactor);

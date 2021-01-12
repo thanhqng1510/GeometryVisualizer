@@ -53,11 +53,6 @@ public class Rect extends Rectangle2D.Double implements MyShape {
     }
 
     @Override
-    public MyShape end() {
-        return this;
-    }
-
-    @Override
     public void translate(double dx, double dy) {
         x += dx;
         y += dy;
@@ -65,10 +60,11 @@ public class Rect extends Rectangle2D.Double implements MyShape {
 
     @Override
     public void scale(double xOrigin, double yOrigin, double scaleFactor) {
+        double botX = x + width, botY = y + height;
+
         x = (x - xOrigin) * scaleFactor + xOrigin;
         y = (y - yOrigin) * scaleFactor + yOrigin;
 
-        double botX = x + width, botY = y + height;
         botX = (botX - xOrigin) * scaleFactor + xOrigin;
         botY = (botY - yOrigin) * scaleFactor + yOrigin;
 

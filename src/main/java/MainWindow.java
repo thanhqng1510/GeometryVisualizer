@@ -103,8 +103,8 @@ public class MainWindow extends JFrame {
 
         });
         drawArea.addMouseWheelListener(e -> {
-            if (e.getWheelRotation() < 0) drawArea.zoomIn();
-            else drawArea.zoomOut();
+            if (e.getWheelRotation() < 0) drawArea.zoomIn(1);
+            else drawArea.zoomOut(1);
         });
         container.add(drawArea, BorderLayout.CENTER);
 

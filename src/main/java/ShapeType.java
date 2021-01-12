@@ -28,9 +28,8 @@ public enum ShapeType {
             return new Line(0, 0, 0, 0, paintColor);
         else if (value == RECT.value)
             return new Rect(0, 0, 0, 0, paintColor);
-        else if (value == ELLIPSE.value)
+        else // if (value == ELLIPSE.value)
             return new Ellipse(0, 0, 0, 0, paintColor);
-        return null;
     }
 
     @Override
