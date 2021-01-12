@@ -1,11 +1,16 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class DrawArea extends JPanel{
-
+    private BufferedImage bi;
+    private Image img = null;
     public DrawArea() {
         g2d = null;
         drawShapeType = ShapeType.LINE;
@@ -222,5 +227,23 @@ public class DrawArea extends JPanel{
         repaint();
 
         g2d.setPaint(paintColor);
+    }
+
+    public void setImage(Image image){
+        img = image;
+        repaint();
+        // Draw the image on to the buffered imag
+    }
+
+    public void ImageTofile(String dst){
+        try {
+            bi = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+            Graphics g = bi.getGraphics();
+            this.printAll(g);
+            ImageIO.write(bi, "jpg", new File(dst));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
