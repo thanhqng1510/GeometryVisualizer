@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class DrawArea extends JPanel{
     private BufferedImage bi;
     private Image img = null;
-public class DrawArea extends JPanel {
 
     public DrawArea() {
         g2d = null;
