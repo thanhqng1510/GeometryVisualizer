@@ -10,12 +10,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DrawArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DrawArea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Ellipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Ellipse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Line.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MyShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MyShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Rect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Rect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShapeType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +95,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610388929599</updated>
       <workItem from="1610388934000" duration="130000" />
-      <workItem from="1610389069614" duration="11482000" />
+      <workItem from="1610389069614" duration="13897000" />
     </task>
     <task id="LOCAL-00001" summary="Add Undo Redo">
       <created>1610416528516</created>
@@ -116,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610416563297</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fix bugs when drawing">
+      <created>1610420090979</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1610420090979</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +138,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Undo Redo" />
     <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
+    <MESSAGE value="Fix bugs when drawing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bugs when drawing" />
   </component>
 </project>

@@ -34,16 +34,10 @@ public class DrawArea extends JPanel{
                         // TODO: add more features
                         break;
                     case ZOOM_IN:
-                        zoomIn(1);
-                        streamData.subList(streamIdx + 1, streamData.size()).clear();
-                        streamData.add(new ArrayList<>(data));
-                        ++streamIdx;
+                        zoomIn(5);
                         break;
                     case ZOOM_OUT:
-                        zoomOut(1);
-                        streamData.subList(streamIdx + 1, streamData.size()).clear();
-                        streamData.add(new ArrayList<>(data));
-                        ++streamIdx;
+                        zoomOut(5);
                         break;
                 }
             }
@@ -55,12 +49,11 @@ public class DrawArea extends JPanel{
                 if (cursorMode == CursorMode.DRAW) {
                     data.add(userCurShape);
                     isDrawing = false;
+
+                    streamData.subList(streamIdx + 1, streamData.size()).clear();
+                    streamData.add(new ArrayList<>(data));
+                    ++streamIdx;
                 }
-
-                streamData.subList(streamIdx + 1, streamData.size()).clear();
-                streamData.add(new ArrayList<>(data));
-                ++streamIdx;
-
             }
 
         });
@@ -84,10 +77,10 @@ public class DrawArea extends JPanel{
                         for (MyShape s : data) s.translate(mousePos.x - oldMousePos.x, mousePos.y - oldMousePos.y);
                         break;
                     case ZOOM_IN:
-                        zoomIn(3);
+                        zoomIn(1);
                         break;
                     case ZOOM_OUT:
-                        zoomOut(3);
+                        zoomOut(1);
                         break;
                     case DRAW:
                         if (!isDrawing) {
@@ -112,7 +105,6 @@ public class DrawArea extends JPanel{
     public void undo(){
         if (streamIdx >= 0) {
             --streamIdx;
-
             if (streamIdx >= 0) data = new ArrayList<>(streamData.get(streamIdx));
             else data = new ArrayList<>();
         }
