@@ -23,6 +23,7 @@ public class DrawArea extends JPanel{
         preData= new ArrayList<>();
         nextData= new ArrayList<>();
         click= new Point();
+        a= new ArrayList<Shape>();
 
 
         setDoubleBuffered(true);
@@ -59,6 +60,8 @@ public class DrawArea extends JPanel{
                         break;
                     case CHOOSE:
                         click= new Point(curMousePos);
+                        chooseShape();
+                        cancel();
                         break;
 
                 }
@@ -131,18 +134,30 @@ public class DrawArea extends JPanel{
         nextData.remove(nextData.size()-1);
     }
 
-    private ArrayList<Shape> chooseShape(){
-        ArrayList<Shape> a= new ArrayList<Shape>();
+    private void chooseShape(){
+        flag=0;
         for(Shape s: data)
         {
             if(s.contain(click.x, click.y))
+            {
                 a.add(s);
+                flag= 1;
+                s.setPaint(Color.BLUE);
+            }
         }
-        return a;
+    }
+
+    private void cancel(){
+        if(flag==0)
+        {
+            for(Shape s: a)
+                s.setPaint(paintColor);
+            a.clear();
+        }
     }
 
     public void delete(){
-        for(Shape s: chooseShape())
+        for(Shape s: a)
             data.remove(s);
     }
 
@@ -200,6 +215,8 @@ public class DrawArea extends JPanel{
     private final ArrayList<ArrayList<Shape>> preData;
     private final ArrayList<ArrayList<Shape>> nextData;
     private Point click;
+    private ArrayList<Shape> a;
+    private int flag;
 
     @Override
     protected void paintComponent(Graphics g) {
