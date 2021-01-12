@@ -21,6 +21,8 @@ public class DrawArea extends JPanel{
         streamData = new ArrayList<>();
         streamIdx = -1;
 
+        click= new Point();
+
         setDoubleBuffered(true);
 
         addMouseListener(new MouseAdapter() {
@@ -32,12 +34,17 @@ public class DrawArea extends JPanel{
                 switch (cursorMode) {
                     case SELECT:
                         // TODO: add more features
+                        click = new Point(curMousePos);
+                        chooseShape();
+                        cancel();
+                        // TODO: handle...
                         break;
                     case ZOOM_IN:
                         zoomIn(5);
                         break;
                     case ZOOM_OUT:
                         zoomOut(5);
+                        zoomOut();
                         break;
                 }
             }
@@ -45,7 +52,6 @@ public class DrawArea extends JPanel{
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-
                 if (cursorMode == CursorMode.DRAW) {
                     data.add(userCurShape);
                     isDrawing = false;
@@ -114,6 +120,32 @@ public class DrawArea extends JPanel{
         if (streamIdx < streamData.size() - 1) {
             ++streamIdx;
             data = new ArrayList<>(streamData.get(streamIdx));
+        data= nextData.get(nextData.size()-1);
+        nextData.remove(nextData.size()-1);
+    }
+
+    private void chooseShape(){
+        flag=0;
+        for(MyShape s: data)
+        {
+            if(s.contain(click.x, click.y))
+            {
+                s.setSelected(true);
+                flag= 1;
+                s.setPaint(Color.BLUE);
+            }
+        }
+    }
+
+    private void cancel(){
+        if(flag==0)
+        {
+            for(MyShape s : data)
+                if (s.selected()) {
+                    s.setPaint(s.getPaint());
+                    s.setSelected(false);
+                }
+
         }
     }
 
@@ -171,6 +203,9 @@ public class DrawArea extends JPanel{
 
     private final ArrayList<ArrayList<MyShape>> streamData;
     private int streamIdx;
+
+    private Point click;
+    private int flag;
 
     @Override
     protected void paintComponent(Graphics g) {
